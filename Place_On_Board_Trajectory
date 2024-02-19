@@ -1,0 +1,47 @@
+double Place_on_Board_Time = 8.85;
+        double Distance_From_Board = 5
+
+        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .followTrajectorySequence(drive ->
+                        drive.trajectorySequenceBuilder(new Pose2d(/*Previous_Trajectory.end*/)) //Put the end of previous trajectory here.
+
+                                .addTemporalMarker(Place_on_Board_Time,()-> {
+                                    //    slide.setPower(0.5);
+                                       // slide.setTargetPosition((int) (Slide_Hieght * 385));
+                                })
+
+                                .addTemporalMarker(Place_on_Board_Time + 1,()-> {
+                                       // arm1.setPosition(0.4);
+                                       // arm2.setPosition(0.56);
+                                        //dump.setPosition(0.49);
+                                })
+                                .waitSeconds(2)
+                                .forward(Distance_From_Board,
+                                        SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(5)
+                                            //Limits to 5 in/s and 5 in/s^2
+                                        )
+                                .addTemporalMarker(Place_on_Board_Time + 3.5,()->{
+                                    //    OperateClaw(0, 1);
+                                    //    OperateClaw(1, 1);
+                                })
+                                .back(Distance_from_board,
+                                        SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(5)
+                                        //Limits to 5 in/s and 5 in/s^2
+                                )
+                                .addTemporalMarker(Place_on_Board_Time + 3.5,()->{
+                                    //    OperateClaw(0, 0);
+                                    //    OperateClaw(1, 0);
+                                    //    arm1.setPosition(0.87);
+                                    //    arm2.setPosition(0.09);
+                                    //    dump.setPosition(0.3);
+                                })
+                                .addTemporalMarker(Place_on_Board_Time + 4.5,()->{
+                                    //    slide.setPower(-0.5);
+                                    //    slide.setTargetPosition((int) (0));
+                                })
+                                .build()
+                );
