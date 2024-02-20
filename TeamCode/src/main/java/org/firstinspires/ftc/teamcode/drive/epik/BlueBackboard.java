@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.drive.epik;
 
-// imported from blood
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -14,8 +12,6 @@ import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
-
-// imported from followerPID
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -24,72 +20,81 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 @Autonomous(group = "drive")
 public class BlueBackboard extends LinearOpMode {
-    private DcMotor fl;
-    private DcMotor fr;
-    private DcMotor bl;
-    private DcMotor br;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backLeft;
+    private DcMotor backRight;
     private Servo arm1;
     private Servo arm2;
     private DcMotor slide;
     private Servo dump;
-    private Servo lclaw;
-    private Servo rclaw;
+    private Servo leftClaw;
+    private Servo rightClaw;
+
+    float tgeLocation;
+    boolean USE_WEBCAM;
 
     VisionPortal.Builder myVisionPortalBuilder;
-    boolean USE_WEBCAM;
     TfodProcessor myTfodProcessor;
-    float tgeLocation;
     VisionPortal myVisionPortal;
+    private static final String[] LABELS = {"cone"};
+    private TfodProcessor tfod;
+    private VisionPortal visionPortal;
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
         Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
-
         drive.setPoseEstimate(startPose);
 
-        //imported from blood
-        fl = hardwareMap.get(DcMotor.class, "fl");
-        fr = hardwareMap.get(DcMotor.class, "fr");
-        bl = hardwareMap.get(DcMotor.class, "bl");
-        br = hardwareMap.get(DcMotor.class, "br");
+        // tensorflow initialization
+        USE_WEBCAM = true;
+        initTfod();
+
+        // motors and servos
+        frontLeft = hardwareMap.get(DcMotor.class, "fl");
+        frontRight = hardwareMap.get(DcMotor.class, "fr");
+        backLeft = hardwareMap.get(DcMotor.class, "bl");
+        backRight = hardwareMap.get(DcMotor.class, "br");
         arm1 = hardwareMap.get(Servo.class, "arm1");
         arm2 = hardwareMap.get(Servo.class, "arm2");
         slide = hardwareMap.get(DcMotor.class, "slide");
         dump = hardwareMap.get(Servo.class, "dump");
-        lclaw = hardwareMap.get(Servo.class, "lclaw");
-        rclaw = hardwareMap.get(Servo.class, "rclaw");
+        leftClaw = hardwareMap.get(Servo.class, "lclaw");
+        rightClaw = hardwareMap.get(Servo.class, "rclaw");
 
-        // Put initialization blocks here.
-        USE_WEBCAM = true;
-        // Initialize TFOD before waitForStart.
-        initTfod();
-        // Set the minimum confidence at which to keep recognitions.
-        myTfodProcessor.setMinResultConfidence((float) 0.6);
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm1.setPosition(0.87);
-        arm2.setPosition(0.09);
-        OperateClaw(0, 0);
-        OperateClaw(1, 0);
-        double Distance_From_Board;
-        double Slide_Hieght;
+        // Initialization behavior and positions
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slide.setTargetPosition(0);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setDirection(DcMotor.Direction.FORWARD);
         dump.setPosition(0.3);
-        // ResetEncoder();
+        arm1.setPosition(0.87);
+        arm2.setPosition(0.09);
+        OperateClaw(0, 0);
+        OperateClaw(1, 0);
+
+        // variables
+        double distanceFromBoard;
+        double slideHeight;
+
+        // gets position of recognition
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        for (Recognition recognition : currentRecognitions) {
+            tgeLocation = (recognition.getLeft());
+        }
+
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
+        telemetry.addData("3-2-9, 3-2-9","15... 20!");
         telemetry.update();
-        // end import
-        waitForStart();
-        // tfod
-        telemetryTfod();
-        telemetry.update();
+
+        waitForStart(); // let's roll
+
         // Put run blocks here.
+        // Path determinations
         if (tgeLocation < 150) {
             tgeLocation = 1;
             telemetry.addData("location", "1");
@@ -100,9 +105,11 @@ public class BlueBackboard extends LinearOpMode {
             tgeLocation = 3;
             telemetry.addData("location", "3");
         } else {
-            telemetry.addData("location", tgeLocation);
+            // default
+            tgeLocation = 3;
         }
         telemetry.update();
+
         if (tgeLocation == 1) { //Location 1, Left Side
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
@@ -116,12 +123,12 @@ public class BlueBackboard extends LinearOpMode {
                     .turn(Math.toRadians(90))
                     .splineTo(new Vector2d(38,38),0)
                     .build();
-            Distance_From_Board = 4; // do not set me to 0 - I will kill your code
-            Slide_Hieght = 4.5;
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (Slide_Hieght * 385));
+                        slide.setTargetPosition((int) (slideHeight * 385));
                     })
                     .addTemporalMarker(2, () -> {
                         arm1.setPosition(0.4);
@@ -129,7 +136,7 @@ public class BlueBackboard extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(3)
-                    .forward(Distance_From_Board,
+                    .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
@@ -139,7 +146,7 @@ public class BlueBackboard extends LinearOpMode {
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
-                    .back(Distance_From_Board)
+                    .back(distanceFromBoard)
                     .addTemporalMarker(7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -158,7 +165,7 @@ public class BlueBackboard extends LinearOpMode {
 
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
-        }else if (tgeLocation == 2) { //Location 2, Middle
+        } else if (tgeLocation == 2) { //Location 2, Middle
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                     .forward(30,
@@ -170,12 +177,12 @@ public class BlueBackboard extends LinearOpMode {
                     .turn(Math.toRadians(90))
                     .lineTo(new Vector2d(34,34))
                     .build();
-            Distance_From_Board = 4; // do not set me to 0 - I will kill your code
-            Slide_Hieght = 4.5;
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (Slide_Hieght * 385));
+                        slide.setTargetPosition((int) (slideHeight * 385));
                     })
                     .addTemporalMarker(2, () -> {
                         arm1.setPosition(0.4);
@@ -183,7 +190,7 @@ public class BlueBackboard extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(3)
-                    .forward(Distance_From_Board,
+                    .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
@@ -193,7 +200,7 @@ public class BlueBackboard extends LinearOpMode {
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
-                    .back(Distance_From_Board)
+                    .back(distanceFromBoard)
                     .addTemporalMarker( 7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -225,12 +232,12 @@ public class BlueBackboard extends LinearOpMode {
                     .turn(Math.toRadians(135))
                     .lineTo(new Vector2d(30,30))
                     .build();
-            Distance_From_Board = 4; // do not set me to 0 - I will kill your code
-            Slide_Hieght = 4.5;
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (Slide_Hieght * 385));
+                        slide.setTargetPosition((int) (slideHeight * 385));
                     })
                     .addTemporalMarker(2, () -> {
                         arm1.setPosition(0.4);
@@ -238,7 +245,7 @@ public class BlueBackboard extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(3)
-                    .forward(Distance_From_Board,
+                    .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
@@ -248,7 +255,7 @@ public class BlueBackboard extends LinearOpMode {
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
-                    .back(Distance_From_Board)
+                    .back(distanceFromBoard)
                     .addTemporalMarker( 7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -268,64 +275,26 @@ public class BlueBackboard extends LinearOpMode {
             drive.followTrajectorySequence(On_Board);
         }
     }
+
     private void initTfod() {
-        TfodProcessor.Builder myTfodProcessorBuilder;
 
-        // First, create a TfodProcessor.Builder.
-        myTfodProcessorBuilder = new TfodProcessor.Builder();
-        // Set the name of the file where the model can be found.
-        myTfodProcessorBuilder.setModelFileName("7258v3.tflite");
-        // Set the full ordered list of labels the model is trained to recognize.
-        myTfodProcessorBuilder.setModelLabels(JavaUtil.createListWith("cone"));
-        // Set the aspect ratio for the images used when the model was created.
-        myTfodProcessorBuilder.setModelAspectRatio(16 / 9);
-        // Create a TfodProcessor by calling build.
-        myTfodProcessor = myTfodProcessorBuilder.build();
-        // Next, create a VisionPortal.Builder and set attributes related to the camera.
-        myVisionPortalBuilder = new VisionPortal.Builder();
+        tfod = new TfodProcessor.Builder()
+                .setModelAssetName("7258v3.tflite")
+                .setModelLabels(LABELS)
+                .setModelInputSize(300)
+                .build();
+
+        // vision portal, aka camera
+        VisionPortal.Builder builder = new VisionPortal.Builder();
         if (USE_WEBCAM) {
-            // Use a webcam.
-            myVisionPortalBuilder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+            builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
         } else {
-            // Use the device's back camera.
-            myVisionPortalBuilder.setCamera(BuiltinCameraDirection.BACK);
+            builder.setCamera(BuiltinCameraDirection.BACK);
         }
-        // Add myTfodProcessor to the VisionPortal.Builder.
-        myVisionPortalBuilder.addProcessor(myTfodProcessor);
-        // Create a VisionPortal by calling build.
-        myVisionPortal = myVisionPortalBuilder.build();
-    }
 
-    /**
-     * Display info (using telemetry) for a detected object
-     */
-    private void telemetryTfod() {
-        List<Recognition> myTfodRecognitions;
-        Recognition myTfodRecognition;
-        float x;
-        float y;
-
-        // Get a list of recognitions from TFOD.
-        myTfodRecognitions = myTfodProcessor.getRecognitions();
-        telemetry.addData("# Objects Detected", JavaUtil.listLength(myTfodRecognitions));
-        // Iterate through list and call a function to display info for each recognized object.
-        for (Recognition myTfodRecognition_item : myTfodRecognitions) {
-            myTfodRecognition = myTfodRecognition_item;
-            // Display info about the recognition.
-            telemetry.addLine("");
-            // Display label and confidence.
-            // Display the label and confidence for the recognition.
-            telemetry.addData("Image", myTfodRecognition.getLabel() + " (" + JavaUtil.formatNumber(myTfodRecognition.getConfidence() * 100, 0) + " % Conf.)");
-            // Display position.
-            x = (myTfodRecognition.getLeft() + myTfodRecognition.getRight()) / 2;
-            tgeLocation = x;
-            y = (myTfodRecognition.getTop() + myTfodRecognition.getBottom()) / 2;
-            // Display the position of the center of the detection boundary for the recognition
-            telemetry.addData("- Position", JavaUtil.formatNumber(x, 0) + ", " + JavaUtil.formatNumber(y, 0));
-            // Display size
-            // Display the size of detection boundary for the recognition
-            telemetry.addData("- Size", JavaUtil.formatNumber(myTfodRecognition.getWidth(), 0) + " x " + JavaUtil.formatNumber(myTfodRecognition.getHeight(), 0));
-        }
+        builder.addProcessor(tfod);
+        visionPortal = builder.build();
+        tfod.setMinResultConfidence(0.6f);
     }
 
     private void OperateClaw(int side, int status) {
@@ -333,13 +302,13 @@ public class BlueBackboard extends LinearOpMode {
         // right - bigger open smaller close
         // Side 0 = Left; Side 1 = Right; Status 0 = Closed; Status 1 = Open
         if (side == 0 && status == 1) {
-            lclaw.setPosition(0.66);
+            leftClaw.setPosition(0.66);
         } else if (side == 0 && status == 0) {
-            lclaw.setPosition(0.81);
+            leftClaw.setPosition(0.81);
         } else if (side == 1 && status == 1) {
-            rclaw.setPosition(0.4);
+            rightClaw.setPosition(0.4);
         } else if (side == 1 && status == 0) {
-            rclaw.setPosition(0.27);
+            rightClaw.setPosition(0.27);
         }
     }
 }
