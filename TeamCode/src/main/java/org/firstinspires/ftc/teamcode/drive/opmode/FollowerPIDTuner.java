@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -26,11 +27,12 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class FollowerPIDTuner extends LinearOpMode {
     public static double DISTANCE = 48; // in
 
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startPose = new Pose2d(-DISTANCE / 2, -DISTANCE / 2, 0);
+        Pose2d startPose = new Pose2d(10, -60, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
@@ -40,7 +42,7 @@ public class FollowerPIDTuner extends LinearOpMode {
 
         while (!isStopRequested()) {
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(DISTANCE)
+                   /* .forward(DISTANCE)
                     .turn(Math.toRadians(90))
                     .forward(DISTANCE)
                     .turn(Math.toRadians(90))
@@ -48,6 +50,17 @@ public class FollowerPIDTuner extends LinearOpMode {
                     .turn(Math.toRadians(90))
                     .forward(DISTANCE)
                     .turn(Math.toRadians(90))
+                    *///.build();
+                    .forward(25)
+                    .turn(Math.toRadians(45))
+                    .forward(5)
+                    .back(5)
+                    .strafeRight(5)
+                    .turn(Math.toRadians(-135))
+                    .splineTo(new Vector2d(30,-34),0)
+                    .waitSeconds(10)
+
+                    .splineTo(new Vector2d (60,-60),0)
                     .build();
             drive.followTrajectorySequence(trajSeq);
         }

@@ -1,18 +1,22 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.drive.opmode;
 
+
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+//added for RR integration
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
 public class BloodBlackstage extends LinearOpMode {
 
     private DcMotor fl;
+    public static double DISTANCE = 48; // in
     private DcMotor fr;
     private DcMotor bl;
     private DcMotor br;
@@ -33,7 +38,6 @@ public class BloodBlackstage extends LinearOpMode {
     VisionPortal.Builder myVisionPortalBuilder;
     boolean USE_WEBCAM;
     TfodProcessor myTfodProcessor;
-    AprilTagProcessor myAprilTagProcessor;
     double MainSpeed;
     float tgeLocation;
     VisionPortal myVisionPortal;
@@ -58,6 +62,12 @@ public class BloodBlackstage extends LinearOpMode {
         USE_WEBCAM = true;
         // Initialize TFOD before waitForStart.
         initTfod();
+        // RR Initialization
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        Pose2d startPose = new Pose2d(10, -60, Math.toRadians(90));
+
+        drive.setPoseEstimate(startPose);
         // Set the minimum confidence at which to keep recognitions.
         myTfodProcessor.setMinResultConfidence((float) 0.6);
         MainSpeed = 0.2;
@@ -95,7 +105,9 @@ public class BloodBlackstage extends LinearOpMode {
                 telemetry.addData("location", tgeLocation);
             }
             telemetry.update();
+            tgeLocation = 1;
             if (tgeLocation == 1) {
+                /* commenting out old code
                 // forward 1
                 MoveRobot(66.04, MainSpeed);
                 StrafeRobot(-9, MainSpeed);
@@ -116,8 +128,25 @@ public class BloodBlackstage extends LinearOpMode {
                 // forward 1
                 MoveRobot(80, MainSpeed);
                 // time to brake
-                sleep(1000);
+                sleep(1000);           */
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                        .forward(25)
+                        .turn(Math.toRadians(45))
+                        .forward(5)
+                        .back(5)
+                        .strafeRight(5)
+                        .turn(Math.toRadians(-135))
+                        .splineTo(new Vector2d(30,-34),0)
+                        .waitSeconds(10)
+                        .addDisplacementMarker(()-> {
+                            //Put the "Place on board "code here.
+                            // Place_On_Board(20, 4.5)
+                        })
+                        .splineTo(new Vector2d (60,-60),0)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
             } else if (tgeLocation == 2) {
+                /*
                 // forward 1
                 MoveRobot(66.04, MainSpeed);
                 MoveRobot(11, MainSpeed);
@@ -134,8 +163,21 @@ public class BloodBlackstage extends LinearOpMode {
                 // forward 1
                 MoveRobot(100, MainSpeed);
                 // time to brake
-                sleep(1000);
+                sleep(1000); */
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                        .forward(28)
+                        .back(2)
+                        .turn(Math.toRadians(-90))
+                        .splineTo(new Vector2d(34,-34),0)
+                        .addDisplacementMarker(()-> {
+                            //Put the "Place on board "code here.
+                            // Place_On_Board(24, 4.5)
+                        })
+                        .splineTo(new Vector2d (60,-60),0)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
             } else {
+                /*
                 // location 3
                 // right
                 StrafeRobot(28, MainSpeed);
@@ -155,15 +197,25 @@ public class BloodBlackstage extends LinearOpMode {
                 StrafeRobot(40, MainSpeed);
                 // forward 1
                 MoveRobot(60, MainSpeed);
-                sleep(1000);
+                sleep(1000); */
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                        .strafeRight(13)
+                        .forward(24)
+                        .back(15)
+                        .turn(Math.toRadians(-90))
+                        .splineTo(new Vector2d(38,-38),0)
+                        .addDisplacementMarker(()-> {
+                            //Put the "Place on board "code here.
+                            //Place_On_Board(20, 4.5)
+                        })
+                        .splineTo(new Vector2d (60,-60),0)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
             }
-            sleep(30000);
+
         }
     }
 
-    /**
-     * Describe this function...
-     */
     private void OperateClaw(int side, int status) {
         // left - bigger close smaller open
         // right - bigger open smaller close
@@ -179,9 +231,7 @@ public class BloodBlackstage extends LinearOpMode {
         }
     }
 
-    /**
-     * Describe this function...
-     */
+    
     private void Place_On_Board(int Distance_From_Board, double Slide_Hieght) {
         // erect sliderail
         slide.setPower(0.5);
@@ -274,66 +324,7 @@ public class BloodBlackstage extends LinearOpMode {
         }
     }
 
-    /**
-     * Describe this function...
-     */
-    private void telemetryAprilTag() {
-        List<AprilTagDetection> myAprilTagDetections;
-        AprilTagDetection myAprilTagDetection;
-
-        // Get a list of AprilTag detections.
-        myAprilTagDetections = myAprilTagProcessor.getDetections();
-        telemetry.addData("# AprilTags Detected", JavaUtil.listLength(myAprilTagDetections));
-        // Iterate through list and call a function to display info for each recognized AprilTag.
-        for (AprilTagDetection myAprilTagDetection_item : myAprilTagDetections) {
-            myAprilTagDetection = myAprilTagDetection_item;
-            // Display info about the detection.
-            telemetry.addLine("");
-            if (myAprilTagDetection.metadata != null) {
-                telemetry.addLine("==== (ID " + myAprilTagDetection.id + ") " + myAprilTagDetection.metadata.name);
-                telemetry.addLine("XYZ " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.x, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.y, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.z, 6, 1) + "  (inch)");
-                telemetry.addLine("PRY " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.pitch, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.roll, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.yaw, 6, 1) + "  (deg)");
-                telemetry.addLine("RBE " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.range, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.bearing, 6, 1) + " " + JavaUtil.formatNumber(myAprilTagDetection.ftcPose.elevation, 6, 1) + "  (inch, deg, deg)");
-            } else {
-                telemetry.addLine("==== (ID " + myAprilTagDetection.id + ") Unknown");
-                telemetry.addLine("Center " + JavaUtil.formatNumber(myAprilTagDetection.center.x, 6, 0) + "" + JavaUtil.formatNumber(myAprilTagDetection.center.y, 6, 0) + " (pixels)");
-            }
-        }
-        telemetry.addLine("");
-        telemetry.addLine("key:");
-        telemetry.addLine("XYZ = X (Right), Y (Forward), Z (Up) dist.");
-        telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
-        telemetry.addLine("RBE = Range, Bearing & Elevation");
-    }
-
-    /**
-     * Describe this function...
-     */
-    private void initAprilTag() {
-        AprilTagProcessor.Builder myAprilTagProcessorBuilder;
-
-        // First, create an AprilTagProcessor.Builder.
-        myAprilTagProcessorBuilder = new AprilTagProcessor.Builder();
-        // Create an AprilTagProcessor by calling build.
-        myAprilTagProcessor = myAprilTagProcessorBuilder.build();
-        // Next, create a VisionPortal.Builder and set attributes related to the camera.
-        myVisionPortalBuilder = new VisionPortal.Builder();
-        if (USE_WEBCAM) {
-            // Use a webcam.
-            myVisionPortalBuilder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
-        } else {
-            // Use the device's back camera.
-            myVisionPortalBuilder.setCamera(BuiltinCameraDirection.BACK);
-        }
-        // Add myAprilTagProcessor to the VisionPortal.Builder.
-        myVisionPortalBuilder.addProcessor(myAprilTagProcessor);
-        // Create a VisionPortal by calling build.
-        myVisionPortal = myVisionPortalBuilder.build();
-    }
-
-    /**
-     * Describe this function...
-     */
+    
     private void MoveRobot(double dist, double speed) {
         ResetEncoder();
         // Wheel Directions
@@ -357,9 +348,7 @@ public class BloodBlackstage extends LinearOpMode {
         ResetEncoder();
     }
 
-    /**
-     * Describe this function...
-     */
+    
     private void StrafeRobot(int dist, double speed) {
         ResetEncoder();
         // Wheel Directions
@@ -383,9 +372,6 @@ public class BloodBlackstage extends LinearOpMode {
         ResetEncoder();
     }
 
-    /**
-     * Describe this function...
-     */
     private void TurnRobot(int dist, double speed) {
         ResetEncoder();
         // Wheel Directions
@@ -409,9 +395,6 @@ public class BloodBlackstage extends LinearOpMode {
         ResetEncoder();
     }
 
-    /**
-     * Describe this function...
-     */
     private void RunToPos() {
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -419,9 +402,6 @@ public class BloodBlackstage extends LinearOpMode {
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    /**
-     * Describe this function...
-     */
     private void ResetEncoder() {
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
