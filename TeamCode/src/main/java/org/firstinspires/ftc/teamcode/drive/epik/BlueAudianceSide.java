@@ -122,8 +122,8 @@ public class BlueAudianceSide extends LinearOpMode {
                     .back(10)
                     .strafeRight(10)
                     .splineTo(new Vector2d(-34,10),Math.toRadians(0))
-                    .lineTo(new Vector2d(38,10))
-                    .splineToLinearHeading(new Pose2d(34, 40, Math.toRadians(0)), Math.toRadians(90))
+                    .lineTo(new Vector2d(30,10))
+                    .splineToLinearHeading(new Pose2d(30, 40, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -162,7 +162,7 @@ public class BlueAudianceSide extends LinearOpMode {
                     })
                     .strafeTo(new Vector2d(30,10))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(10,10))
+                    .lineTo(new Vector2d(56,10))
                     .build();
 
             drive.followTrajectorySequence(trajSeq);
@@ -218,26 +218,23 @@ public class BlueAudianceSide extends LinearOpMode {
                     })
                     .strafeTo(new Vector2d(30,10))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(10,10))
+                    .lineTo(new Vector2d(56,10))
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
         } else { //Location 3, Right Side
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .strafeRight(13,
+                    .forward(26,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
-                    .forward(25,
-                            SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(30)
-                            //Limits to 30 in/s and 30 in/s^2
-                    )
-                    .back(10)
-                    .strafeLeft(13)
+                    .turn(Math.toRadians(-45))
+                    .forward(5)
+                    .back(5)
+                    .turn(Math.toRadians(45))
                     .lineTo(new Vector2d(-34,10))
-                    .lineTo(new Vector2d(34,10))
+                    .lineTo(new Vector2d(38,10))
                     .splineToLinearHeading(new Pose2d(30, 30, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
@@ -277,7 +274,7 @@ public class BlueAudianceSide extends LinearOpMode {
                     })
                     .strafeTo(new Vector2d(30,10))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(10,10))
+                    .lineTo(new Vector2d(56,10))
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);

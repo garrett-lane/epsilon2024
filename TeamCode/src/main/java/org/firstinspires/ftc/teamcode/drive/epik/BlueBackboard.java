@@ -113,15 +113,17 @@ public class BlueBackboard extends LinearOpMode {
         if (tgeLocation == 1) { //Location 1, Left Side
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .strafeLeft(13,
+                    .forward(25,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
-                    .forward(24)
-                    .back(15)
-                    .turn(Math.toRadians(90))
-                    .splineTo(new Vector2d(38,38),0)
+                    .turn(Math.toRadians(45))
+                    .forward(5)
+                    .back(5)
+                    .strafeLeft(5)
+                    .turn(Math.toRadians(45))
+                    .lineTo(new Vector2d(30,38))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -175,7 +177,7 @@ public class BlueBackboard extends LinearOpMode {
                     )
                     .back(15)
                     .turn(Math.toRadians(90))
-                    .lineTo(new Vector2d(34,34))
+                    .lineTo(new Vector2d(30,34))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;

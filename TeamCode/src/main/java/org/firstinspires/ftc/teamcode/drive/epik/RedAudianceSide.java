@@ -227,17 +227,17 @@ public class RedAudianceSide extends LinearOpMode {
         } else { //Location 3, Right Side
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                     .forward(26,
-                            SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(30)
-                                    //Limits to 30 in/s and 30 in/s^2
+                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                             SampleMecanumDrive.getAccelerationConstraint(30)
+                            //Limits to 30 in/s and 30 in/s^2
                     )
-                    .turn(Math.toRadians(-45))
+                    .turn(Math.toRadians(45))
                     .forward(5)
-                    .back(10)
-                    .strafeLeft(10)
+                    .back(5)
+                    .turn(Math.toRadians(-45))
                     .splineTo(new Vector2d(-34,-10),Math.toRadians(0))
-                    .lineTo(new Vector2d(38,-10))
-                    .splineToLinearHeading(new Pose2d(34, -40, Math.toRadians(0)), Math.toRadians(90))
+                    .lineTo(new Vector2d(30,-10))
+                    .splineToLinearHeading(new Pose2d(30, -40, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
