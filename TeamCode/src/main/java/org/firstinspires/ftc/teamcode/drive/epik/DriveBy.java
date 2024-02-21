@@ -21,7 +21,7 @@ public class DriveBy extends LinearOpMode {
     private DcMotor bl;
     private DcMotor br;
     private DcMotor hook;
-    private CRServo pwane;
+    private Servo pwane;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
@@ -46,7 +46,7 @@ public class DriveBy extends LinearOpMode {
         bl = hardwareMap.get(DcMotor.class, "bl");
         br = hardwareMap.get(DcMotor.class, "br");
         hook = hardwareMap.get(DcMotor.class, "hook");
-        pwane = hardwareMap.get(CRServo.class, "pwane");
+        pwane = hardwareMap.get(Servo.class, "pwane");
 
         Claw_on_Ground = false;
         turboSpeed = 1;
@@ -184,16 +184,12 @@ public class DriveBy extends LinearOpMode {
                 }
             }
             if (gamepad1.dpad_up) {
-                pwane.setPower(-1);
+                pwane.setPosition(.05);
             } else if (gamepad1.dpad_down) {
-                pwane.setPower(1);
-            } else {
-                pwane.setPower(0);
+                pwane.setPosition(.3);
             }
-            // Pwane release
         }
         telemetry.update();
-        // Release - Servo
     }
 
     /**

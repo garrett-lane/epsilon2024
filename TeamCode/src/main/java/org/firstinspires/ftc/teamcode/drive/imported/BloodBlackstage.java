@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive.imported;
 
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import java.util.List;
 
 @Autonomous(name = "BloodBlackstage (Blocks to Java)", group = "AA")
+@Disabled
 public class BloodBlackstage extends LinearOpMode {
 
     private DcMotor fl;

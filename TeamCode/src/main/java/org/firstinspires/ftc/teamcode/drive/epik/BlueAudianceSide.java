@@ -34,9 +34,6 @@ public class BlueAudianceSide extends LinearOpMode {
     float tgeLocation;
     boolean USE_WEBCAM;
 
-    VisionPortal.Builder myVisionPortalBuilder;
-    TfodProcessor myTfodProcessor;
-    VisionPortal myVisionPortal;
     private static final String[] LABELS = {"cone"};
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
@@ -80,12 +77,6 @@ public class BlueAudianceSide extends LinearOpMode {
         double distanceFromBoard;
         double slideHeight;
 
-        // gets position of recognition
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        for (Recognition recognition : currentRecognitions) {
-            tgeLocation = (recognition.getLeft());
-        }
-
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
         telemetry.addData("3-2-9, 3-2-9","15... 20!");
@@ -94,6 +85,12 @@ public class BlueAudianceSide extends LinearOpMode {
         waitForStart(); // let's roll
 
         // Put run blocks here.
+        // gets position of recognition
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        for (Recognition recognition : currentRecognitions) {
+            tgeLocation = (recognition.getLeft() + recognition.getRight()) / 2 ;
+        }
+
         // Path determinations
         if (tgeLocation < 150) {
             tgeLocation = 1;
@@ -121,9 +118,9 @@ public class BlueAudianceSide extends LinearOpMode {
                     .forward(5)
                     .back(10)
                     .strafeRight(10)
-                    .splineTo(new Vector2d(-34,10),Math.toRadians(0))
-                    .lineTo(new Vector2d(30,10))
-                    .splineToLinearHeading(new Pose2d(30, 40, Math.toRadians(0)), Math.toRadians(90))
+                    .splineTo(new Vector2d(-34,12),Math.toRadians(0))
+                    .lineTo(new Vector2d(30,12))
+                    .splineToLinearHeading(new Pose2d(30, 42, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -160,9 +157,9 @@ public class BlueAudianceSide extends LinearOpMode {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
-                    .strafeTo(new Vector2d(30,10))
+                    .strafeTo(new Vector2d(30,12))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(56,10))
+                    .lineTo(new Vector2d(56,12))
                     .build();
 
             drive.followTrajectorySequence(trajSeq);
@@ -170,16 +167,16 @@ public class BlueAudianceSide extends LinearOpMode {
         } else if (tgeLocation == 2) { //Location 2, Middle
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(30,
+                    .forward(31,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .back(10)
                     .strafeRight(10)
-                    .splineTo(new Vector2d(-34,10),Math.toRadians(0))
-                    .lineTo(new Vector2d(34,10))
-                    .splineToLinearHeading(new Pose2d(30, 34, Math.toRadians(0)), Math.toRadians(90))
+                    .splineTo(new Vector2d(-34,12),Math.toRadians(0))
+                    .lineTo(new Vector2d(34,12))
+                    .splineToLinearHeading(new Pose2d(30, 36, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -216,9 +213,9 @@ public class BlueAudianceSide extends LinearOpMode {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
-                    .strafeTo(new Vector2d(30,10))
+                    .strafeTo(new Vector2d(30,12))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(56,10))
+                    .lineTo(new Vector2d(56,12))
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
@@ -230,12 +227,12 @@ public class BlueAudianceSide extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(5)
-                    .back(5)
+                    .forward(7)
+                    .back(7)
                     .turn(Math.toRadians(45))
-                    .lineTo(new Vector2d(-34,10))
-                    .lineTo(new Vector2d(38,10))
-                    .splineToLinearHeading(new Pose2d(30, 30, Math.toRadians(0)), Math.toRadians(90))
+                    .lineTo(new Vector2d(-34,-2))
+                    .lineTo(new Vector2d(30,-2))
+                    .splineToLinearHeading(new Pose2d(30, 28, Math.toRadians(0)), Math.toRadians(90))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;

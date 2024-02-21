@@ -35,10 +35,6 @@ public class RedBackboard extends LinearOpMode {
     float tgeLocation;
     boolean USE_WEBCAM;
 
-    // VisionPortal.Builder myVisionPortalBuilder; remove if worky
-    // TfodProcessor myTfodProcessor; remove if worky
-    // VisionPortal myVisionPortal;remove if worky
-    // private static final String TFOD_MODEL_ASSET = "7258v3.tflite"; remove if worky
     private static final String[] LABELS = {"cone"};
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
@@ -82,28 +78,28 @@ public class RedBackboard extends LinearOpMode {
         double distanceFromBoard;
         double slideHeight;
 
-        // gets position of recognition
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        for (Recognition recognition : currentRecognitions) {
-            tgeLocation = (recognition.getLeft());
-        }
-
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
         telemetry.addData("3-2-9, 3-2-9","15... 20!");
         telemetry.update();
 
         waitForStart(); // let's roll
-        
+
         // Put run blocks here.
+        // gets position of recognition
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        for (Recognition recognition : currentRecognitions) {
+            tgeLocation = (recognition.getLeft() + recognition.getRight()) / 2 ;
+        }
+
         // Path determinations
         if (tgeLocation < 150) {
             tgeLocation = 1;
             telemetry.addData("location", "1");
-        } else if (151 < tgeLocation && tgeLocation < 474) {
+        } else if (150 < tgeLocation && tgeLocation < 474) {
             tgeLocation = 2;
             telemetry.addData("location", "2");
-        } else if (475 < tgeLocation) {
+        } else if (474 < tgeLocation) {
             tgeLocation = 3;
             telemetry.addData("location", "3");
         } else {

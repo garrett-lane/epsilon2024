@@ -34,9 +34,6 @@ public class RedAudianceSide extends LinearOpMode {
     float tgeLocation;
     boolean USE_WEBCAM;
 
-    VisionPortal.Builder myVisionPortalBuilder;
-    TfodProcessor myTfodProcessor;
-    VisionPortal myVisionPortal;
     private static final String[] LABELS = {"cone"};
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
@@ -80,12 +77,6 @@ public class RedAudianceSide extends LinearOpMode {
         double distanceFromBoard;
         double slideHeight;
 
-        // gets position of recognition
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        for (Recognition recognition : currentRecognitions) {
-            tgeLocation = (recognition.getLeft());
-        }
-
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
         telemetry.addData("3-2-9, 3-2-9","15... 20!");
@@ -94,6 +85,12 @@ public class RedAudianceSide extends LinearOpMode {
         waitForStart(); // let's roll
 
         // Put run blocks here.
+        // gets position of recognition
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        for (Recognition recognition : currentRecognitions) {
+            tgeLocation = (recognition.getLeft() + recognition.getRight()) / 2 ;
+        }
+
         // Path determinations
         if (tgeLocation < 150) {
             tgeLocation = 1;

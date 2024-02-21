@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.imported;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 @Autonomous(name = "CripBlackstage (Blocks to Java)", group = "AA")
+@Disabled
 public class CripBlackstage extends LinearOpMode {
 
     private DcMotor fl;
