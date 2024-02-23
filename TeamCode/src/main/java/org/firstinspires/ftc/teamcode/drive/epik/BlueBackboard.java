@@ -116,11 +116,11 @@ public class BlueBackboard extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(45))
-                    .forward(5)
-                    .back(5)
-                    .strafeLeft(5)
+                    .forward(6)
+                    .back(6)
+                    .strafeLeft(6)
                     .turn(Math.toRadians(45))
-                    .lineTo(new Vector2d(30,38))
+                    .lineTo(new Vector2d(32,38))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -172,9 +172,9 @@ public class BlueBackboard extends LinearOpMode {
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
-                    .back(15)
+                    .back(6)
                     .turn(Math.toRadians(90))
-                    .lineTo(new Vector2d(30,34))
+                    .lineTo(new Vector2d(31,30))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -188,19 +188,19 @@ public class BlueBackboard extends LinearOpMode {
                         arm2.setPosition(0.56);
                         dump.setPosition(0.49);
                     })
-                    .waitSeconds(3)
+                    .waitSeconds(2)
                     .forward(distanceFromBoard,
-                            SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(10)
+                            SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                            SampleMecanumDrive.getAccelerationConstraint(15)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(5.5, () -> {
+                    .addTemporalMarker(3.5, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
@@ -214,6 +214,7 @@ public class BlueBackboard extends LinearOpMode {
                     .strafeTo(new Vector2d(30,56))
                     .waitSeconds(4)
                     .lineTo(new Vector2d(56,56))
+                    .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
@@ -229,7 +230,7 @@ public class BlueBackboard extends LinearOpMode {
                     .back(5)
                     .strafeLeft(5)
                     .turn(Math.toRadians(135))
-                    .lineTo(new Vector2d(30,30))
+                    .lineTo(new Vector2d(32,26))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -243,19 +244,19 @@ public class BlueBackboard extends LinearOpMode {
                         arm2.setPosition(0.56);
                         dump.setPosition(0.49);
                     })
-                    .waitSeconds(3)
+                    .waitSeconds(2)
                     .forward(distanceFromBoard,
-                            SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(10)
+                            SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                            SampleMecanumDrive.getAccelerationConstraint(15)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(5.5, () -> {
+                    .addTemporalMarker(3.5, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
@@ -269,6 +270,7 @@ public class BlueBackboard extends LinearOpMode {
                     .strafeTo(new Vector2d(30,56))
                     .waitSeconds(4)
                     .lineTo(new Vector2d(56,56))
+                    .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);

@@ -167,16 +167,18 @@ public class BlueAudianceSide extends LinearOpMode {
         } else if (tgeLocation == 2) { //Location 2, Middle
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(31,
+                    .forward(30,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .back(10)
                     .strafeRight(10)
-                    .splineTo(new Vector2d(-34,12),Math.toRadians(0))
+                    .splineTo(new Vector2d(-34,10),Math.toRadians(0))
+                    .turn(Math.toRadians(-90))
+                    .waitSeconds(2)
                     .lineTo(new Vector2d(34,12))
-                    .splineToLinearHeading(new Pose2d(30, 36, Math.toRadians(0)), Math.toRadians(90))
+                    .splineTo(new Vector2d(34, 40), Math.toRadians(0))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -230,9 +232,10 @@ public class BlueAudianceSide extends LinearOpMode {
                     .forward(7)
                     .back(7)
                     .turn(Math.toRadians(45))
-                    .lineTo(new Vector2d(-34,-2))
-                    .lineTo(new Vector2d(30,-2))
-                    .splineToLinearHeading(new Pose2d(30, 28, Math.toRadians(0)), Math.toRadians(90))
+                    .lineTo(new Vector2d(-34,10))
+                    .turn(Math.toRadians(90))
+                    .lineTo(new Vector2d(15,10))
+                    .splineTo(new Vector2d(37, 26), Math.toRadians(0))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -247,27 +250,27 @@ public class BlueAudianceSide extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(3)
-                    .forward(distanceFromBoard,
+                    /* .lineTo(new Vector2d(38, 28),
                             SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
-                    )
-                    .addTemporalMarker(5.5, () -> {
+                    ) */
+                    .addTemporalMarker(3.5, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
-                    .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    // .lineTo(new Vector2d(34, 28))
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
-                    .addTemporalMarker(9.5, () -> {
+                    .addTemporalMarker(8, () -> {
                         slide.setPower(-0.5);
-                        slide.setTargetPosition((int) (0));
+                        slide.setTargetPosition((0));
                     })
                     .strafeTo(new Vector2d(30,10))
                     .waitSeconds(4)

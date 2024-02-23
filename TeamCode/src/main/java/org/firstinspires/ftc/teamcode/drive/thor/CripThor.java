@@ -1,27 +1,27 @@
-package org.firstinspires.ftc.teamcode.drive.epik;
+package org.firstinspires.ftc.teamcode.drive.thor;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-import java.util.List;
-import java.util.Vector;
-
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+import java.util.List;
 
 @Config
 @Autonomous(group = "drive")
-public class RedAudianceSide extends LinearOpMode {
+public class CripThor extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
@@ -42,7 +42,7 @@ public class RedAudianceSide extends LinearOpMode {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        Pose2d startPose = new Pose2d(-34, -60, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
         drive.setPoseEstimate(startPose);
 
         // tensorflow initialization
@@ -110,20 +110,22 @@ public class RedAudianceSide extends LinearOpMode {
         telemetry.update();
 
         if (tgeLocation == 1) { //Location 1, Left Side
+
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(26,
+                    .forward(25,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(45))
-                    .forward(7)
-                    .back(7)
-                    .turn(Math.toRadians(-45))
-                    .lineTo(new Vector2d(-34,-10))
-                    .turn(Math.toRadians(-90))
-                    .lineTo(new Vector2d(20,-10))
-                    .splineTo(new Vector2d(31, - 26), Math.toRadians(0))
+                    .forward(6)
+                    .back(6)
+                    .strafeLeft(6)
+                    .turn(Math.toRadians(45))
+                    .strafeLeft(10)
+                    .lineToLinearHeading(new Pose2d(38, 58, Math.toRadians(0)))
+                    .waitSeconds(10)
+                    .lineTo(new Vector2d(32,38))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -160,28 +162,28 @@ public class RedAudianceSide extends LinearOpMode {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
-                    .strafeTo(new Vector2d(30,-6))
+                    .strafeTo(new Vector2d(30,56))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(56,-6))
+                    .lineTo(new Vector2d(56,56))
                     .build();
-
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
         } else if (tgeLocation == 2) { //Location 2, Middle
+
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                     .forward(30,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
-                                    //Limits to 30 in/s and 30 in/s^2
+                            //Limits to 30 in/s and 30 in/s^2
                     )
-                    .back(10)
-                    .strafeLeft(10)
-                    .splineTo(new Vector2d(-40,-10),Math.toRadians(0))
-                    .turn(Math.toRadians(90))
-                    .lineTo(new Vector2d(32,-10))
-                    .lineTo(new Vector2d(32,-36))
+                    .forward(6)
+                    .back(6)
+                    .back(30)
+                    .lineToLinearHeading(new Pose2d(38, 58, Math.toRadians(0)))
+                    .waitSeconds(10)
+                    .lineTo(new Vector2d(31,30))
                     .build();
-            distanceFromBoard = 3; // do not set me to 0 - I will kill your code
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
@@ -193,19 +195,19 @@ public class RedAudianceSide extends LinearOpMode {
                         arm2.setPosition(0.56);
                         dump.setPosition(0.49);
                     })
-                    .waitSeconds(3)
+                    .waitSeconds(2)
                     .forward(distanceFromBoard,
-                            SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(10)
+                            SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                            SampleMecanumDrive.getAccelerationConstraint(15)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(5.5, () -> {
+                    .addTemporalMarker(3.5, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
@@ -216,29 +218,29 @@ public class RedAudianceSide extends LinearOpMode {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
-                    .strafeTo(new Vector2d(30,-10))
+                    .strafeTo(new Vector2d(30,56))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(56,-10))
+                    .lineTo(new Vector2d(56,56))
+                    .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
         } else { //Location 3, Right Side
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(26,
-                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                             SampleMecanumDrive.getAccelerationConstraint(30)
+                    .forward(25,
+                            SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                            SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(5)
-                    .back(5)
+                    .forward(6)
+                    .back(6)
                     .turn(Math.toRadians(45))
-                    .lineTo(new Vector2d(-34,-10))
-                    .turn(Math.toRadians(-90))
-                    .lineTo(new Vector2d(34,-10))
-                    .lineTo(new Vector2d(34, -36))
+                    .lineToLinearHeading(new Pose2d(38, 58, Math.toRadians(0)))
+                    .waitSeconds(10)
+                    .lineTo(new Vector2d(32,26))
                     .build();
-            distanceFromBoard = 2; // do not set me to 0 - I will kill your code
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
@@ -250,19 +252,19 @@ public class RedAudianceSide extends LinearOpMode {
                         arm2.setPosition(0.56);
                         dump.setPosition(0.49);
                     })
-                    .waitSeconds(3)
+                    .waitSeconds(2)
                     .forward(distanceFromBoard,
-                            SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(10)
+                            SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                            SampleMecanumDrive.getAccelerationConstraint(15)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(4, () -> {
+                    .addTemporalMarker(3.5, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
@@ -273,9 +275,10 @@ public class RedAudianceSide extends LinearOpMode {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
-                    .strafeTo(new Vector2d(34,-6))
+                    .strafeTo(new Vector2d(30,56))
                     .waitSeconds(4)
-                    .lineTo(new Vector2d(56,-6))
+                    .lineTo(new Vector2d(56,56))
+                    .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
