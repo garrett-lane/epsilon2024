@@ -53,7 +53,7 @@ public class DriveBy extends LinearOpMode {
         normalSpeed = 0.5;
         slomoSpeed = 0.2;
         dump.setPosition(0.3);
-        arm1.setPosition(0.9);
+        arm1.setPosition(0.89);
         arm2.setPosition(0.09);
         lclaw.setPosition(0.81);
         rclaw.setPosition(0.27);
@@ -108,7 +108,7 @@ public class DriveBy extends LinearOpMode {
                     rclaw.setPosition(0.26);
                     sleep(300);
                     dump.setPosition(0.7);
-                    arm1.setPosition(0.9);
+                    arm1.setPosition(0.89);
                     arm2.setPosition(0.1);
                 } else {
                     // close
@@ -157,27 +157,27 @@ public class DriveBy extends LinearOpMode {
             }
             // Arm - motor
             if (gamepad2.circle) {
-                arm1.setPosition(0.19);
+                arm1.setPosition(0.18);
                 arm2.setPosition(0.8);
             } else if (gamepad2.square) {
-                arm1.setPosition(0.39);
+                arm1.setPosition(0.38);
                 arm2.setPosition(0.6);
             } else {
                 if (!Claw_on_Ground) {
-                    arm1.setPosition(0.9);
+                    arm1.setPosition(0.89);
                     arm2.setPosition(0.09);
                 }
             }
             // Magazine - Servo
             if (gamepad2.a) {
                 // Lower to Grab
-                arm1.setPosition(0.83);
+                arm1.setPosition(0.81);
                 arm2.setPosition(0.16);
                 dump.setPosition(0.37);
             } else if (gamepad2.square) {
-                dump.setPosition(0.53);
+                dump.setPosition(0.50);
             } else if (gamepad2.circle) {
-                dump.setPosition(0.75);
+                dump.setPosition(0.70);
             } else {
                 if (!Claw_on_Ground) {
                     dump.setPosition(0.3);

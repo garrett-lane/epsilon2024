@@ -70,7 +70,7 @@ public class RedAudianceSide extends LinearOpMode {
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setDirection(DcMotor.Direction.FORWARD);
         dump.setPosition(0.3);
-        arm1.setPosition(0.87);
+        arm1.setPosition(0.89);
         arm2.setPosition(0.09);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
@@ -152,7 +152,7 @@ public class RedAudianceSide extends LinearOpMode {
                     .addTemporalMarker(7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
-                        arm1.setPosition(0.87);
+                        arm1.setPosition(0.89);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
@@ -208,7 +208,7 @@ public class RedAudianceSide extends LinearOpMode {
                     .addTemporalMarker( 7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
-                        arm1.setPosition(0.87);
+                        arm1.setPosition(0.89);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
@@ -232,6 +232,7 @@ public class RedAudianceSide extends LinearOpMode {
                     .turn(Math.toRadians(-45))
                     .forward(5)
                     .back(5)
+                    .strafeLeft(5)
                     .turn(Math.toRadians(45))
                     .lineTo(new Vector2d(-34,-10))
                     .turn(Math.toRadians(-90))
@@ -265,7 +266,7 @@ public class RedAudianceSide extends LinearOpMode {
                     .addTemporalMarker( 7.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
-                        arm1.setPosition(0.87);
+                        arm1.setPosition(0.89);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })

@@ -69,7 +69,7 @@ public class RedBackboard extends LinearOpMode {
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setDirection(DcMotor.Direction.FORWARD);
         dump.setPosition(0.3);
-        arm1.setPosition(0.87);
+        arm1.setPosition(0.89);
         arm2.setPosition(0.09);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
@@ -141,20 +141,20 @@ public class RedBackboard extends LinearOpMode {
                                 SampleMecanumDrive.getAccelerationConstraint(10)
                                 //Limits to 10 in/s and 10 in/s^2
                         )
-                        .addTemporalMarker(5.5, () -> {
+                        .addTemporalMarker(4, () -> {
                             OperateClaw(0, 1);
                             OperateClaw(1, 1);
                         })
                         .waitSeconds(1.5)
                         .back(distanceFromBoard)
-                        .addTemporalMarker(7.5, () -> {
+                        .addTemporalMarker(6, () -> {
                             OperateClaw(0, 0);
                             OperateClaw(1, 0);
-                            arm1.setPosition(0.87);
+                            arm1.setPosition(0.89);
                             arm2.setPosition(0.09);
                             dump.setPosition(0.3);
                         })
-                        .addTemporalMarker(9.5, () -> {
+                        .addTemporalMarker(7, () -> {
                             slide.setPower(-0.5);
                             slide.setTargetPosition((int) (0));
                         })
@@ -196,20 +196,20 @@ public class RedBackboard extends LinearOpMode {
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(5, () -> {
+                    .addTemporalMarker(4, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
-                        arm1.setPosition(0.87);
+                        arm1.setPosition(0.89);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
-                    .addTemporalMarker(9.5, () -> {
+                    .addTemporalMarker(7, () -> {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
@@ -251,25 +251,25 @@ public class RedBackboard extends LinearOpMode {
                             SampleMecanumDrive.getAccelerationConstraint(10)
                             //Limits to 10 in/s and 10 in/s^2
                     )
-                    .addTemporalMarker(5.5, () -> {
+                    .addTemporalMarker(4, () -> {
                         OperateClaw(0, 1);
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .addTemporalMarker( 7.5, () -> {
+                    .addTemporalMarker( 6, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
-                        arm1.setPosition(0.87);
+                        arm1.setPosition(0.89);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
-                    .addTemporalMarker(9.5, () -> {
+                    .addTemporalMarker(7, () -> {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((int) (0));
                     })
                     .strafeTo(new Vector2d(30,-56))
-                    .waitSeconds(4)
+                    .waitSeconds(2)
                     .lineTo(new Vector2d(56,-56))
                     .build();
             drive.followTrajectorySequence(trajSeq);
