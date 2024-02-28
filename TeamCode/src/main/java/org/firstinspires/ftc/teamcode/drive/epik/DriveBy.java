@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "DriveBy", group = "NIGGER")
+@TeleOp(name = "DriveBy", group = "main")
 public class DriveBy extends LinearOpMode {
 
     private Servo dump;
@@ -186,7 +186,7 @@ public class DriveBy extends LinearOpMode {
             if (gamepad1.dpad_up) {
                 pwane.setPosition(.05);
             } else if (gamepad1.dpad_down) {
-                pwane.setPosition(.3);
+                pwane.setPosition(.5);
             }
         }
         telemetry.update();
