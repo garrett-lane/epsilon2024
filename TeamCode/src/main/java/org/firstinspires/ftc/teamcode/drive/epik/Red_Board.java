@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(group = "main")
+@Autonomous(group = "main", preselectTeleOp = "DriveBy")
 public class Red_Board extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -31,11 +31,12 @@ public class Red_Board extends LinearOpMode {
     private Servo dump;
     private Servo leftClaw;
     private Servo rightClaw;
+    private Servo pwane;
 
     float tgeLocation;
     boolean USE_WEBCAM;
 
-    private static final String[] LABELS = {"cone"};
+    private static final String[] LABELS = {"red"};
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     @Override
@@ -59,6 +60,7 @@ public class Red_Board extends LinearOpMode {
         dump = hardwareMap.get(Servo.class, "dump");
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
+        pwane = hardwareMap.get(Servo.class, "pwane");
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -71,6 +73,7 @@ public class Red_Board extends LinearOpMode {
         dump.setPosition(0.3);
         arm1.setPosition(0.89);
         arm2.setPosition(0.09);
+        pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
 
@@ -124,11 +127,11 @@ public class Red_Board extends LinearOpMode {
                        slide.setPower(0.5);
                        slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(30,-25),
+                    .lineTo(new Vector2d(30,-26.5),
                             SampleMecanumDrive.getVelocityConstraint(35, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(35))
                     .build();
-            distanceFromBoard = 3.5; // do not set me to 0 - I will kill your code
+            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                        /* .addTemporalMarker(0, () -> {
@@ -290,7 +293,7 @@ public class Red_Board extends LinearOpMode {
     private void initTfod() {
 
         tfod = new TfodProcessor.Builder()
-            .setModelAssetName("7258v3.tflite")
+            .setModelAssetName("red_v1.tflite")
             .setModelLabels(LABELS)
             .setModelInputSize(300)
             .build();

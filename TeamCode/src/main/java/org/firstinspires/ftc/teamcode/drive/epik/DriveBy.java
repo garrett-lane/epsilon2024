@@ -21,6 +21,7 @@ public class DriveBy extends LinearOpMode {
     private DcMotor bl;
     private DcMotor br;
     private DcMotor hook;
+    private DcMotor intake;
     private Servo pwane;
 
     /**
@@ -47,6 +48,7 @@ public class DriveBy extends LinearOpMode {
         br = hardwareMap.get(DcMotor.class, "br");
         hook = hardwareMap.get(DcMotor.class, "hook");
         pwane = hardwareMap.get(Servo.class, "pwane");
+        intake = hardwareMap.get(DcMotor.class, "intake");
 
         Claw_on_Ground = false;
         turboSpeed = 1;
@@ -63,6 +65,7 @@ public class DriveBy extends LinearOpMode {
         slide.setDirection(DcMotor.Direction.FORWARD);
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        intake.setDirection(DcMotor.Direction.REVERSE);
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -174,6 +177,7 @@ public class DriveBy extends LinearOpMode {
                 arm1.setPosition(0.81);
                 arm2.setPosition(0.16);
                 dump.setPosition(0.37);
+                intake.setPower(0.7);
             } else if (gamepad2.square) {
                 dump.setPosition(0.50);
             } else if (gamepad2.circle) {
@@ -182,6 +186,7 @@ public class DriveBy extends LinearOpMode {
                 if (!Claw_on_Ground) {
                     dump.setPosition(0.3);
                 }
+                intake.setPower(0.0);
             }
             if (gamepad1.dpad_up) {
                 pwane.setPosition(.05);

@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,7 +21,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Config
-@Autonomous(group = "thor")
+@Autonomous(group = "thor", preselectTeleOp = "DriveBy")
+@Disabled
 public class THOR_Red_Board extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -32,6 +34,7 @@ public class THOR_Red_Board extends LinearOpMode {
     private Servo dump;
     private Servo leftClaw;
     private Servo rightClaw;
+    private Servo pwane;
 
     float tgeLocation;
     boolean USE_WEBCAM;
@@ -60,6 +63,7 @@ public class THOR_Red_Board extends LinearOpMode {
         dump = hardwareMap.get(Servo.class, "dump");
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
+        pwane = hardwareMap.get(Servo.class, "pwane");
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -72,6 +76,7 @@ public class THOR_Red_Board extends LinearOpMode {
         dump.setPosition(0.3);
         arm1.setPosition(0.87);
         arm2.setPosition(0.09);
+        pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
 
@@ -121,10 +126,10 @@ public class THOR_Red_Board extends LinearOpMode {
                     .forward(5)
                     .back(5)
                     .lineToLinearHeading(new Pose2d(38, -58, Math.toRadians(0)))
-                    .waitSeconds(10)
+                    .waitSeconds(8)
                     .lineTo(new Vector2d(30,-28))
                     .build();
-            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+            distanceFromBoard = 4.75; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
@@ -180,8 +185,8 @@ public class THOR_Red_Board extends LinearOpMode {
                     .waitSeconds(10)
                     .lineTo(new Vector2d(32,-34))
                     .build();
-            distanceFromBoard = 2; // do not set me to 0 - I will kill your code
-            slideHeight = 4.5;
+            distanceFromBoard = 3; // do not set me to 0 - I will kill your code
+            slideHeight = 4.75;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .addTemporalMarker(0, () -> {
                         slide.setPower(0.5);
@@ -229,18 +234,18 @@ public class THOR_Red_Board extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(5)
-                    .back(5)
+                    .forward(6)
+                    .back(6)
                     .strafeRight(5)
                     .lineToLinearHeading(new Pose2d(20, -58, Math.toRadians(0)))
                     .addDisplacementMarker(()->{
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (4.5 * 385));
+                        slide.setTargetPosition((int) (4.75 * 385));
                     })
                     .waitSeconds(10)
                     .lineTo(new Vector2d(30,-38))
                     .build();
-            distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+            distanceFromBoard = 4.75; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     /*.addTemporalMarker(0, () -> {
@@ -263,19 +268,19 @@ public class THOR_Red_Board extends LinearOpMode {
                         OperateClaw(1, 1);
                     })
                     .waitSeconds(1.5)
-                    .back(distanceFromBoard)
-                    .addTemporalMarker( 3, () -> {
+                    .back(distanceFromBoard+1)
+                    .strafeTo(new Vector2d(30,-56))
+                    .addTemporalMarker( 3.5, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
                         arm1.setPosition(0.87);
                         arm2.setPosition(0.09);
                         dump.setPosition(0.3);
                     })
-                    .addTemporalMarker(4, () -> {
+                    .addTemporalMarker(4.5, () -> {
                         slide.setPower(-0.5);
                         slide.setTargetPosition((0));
                     })
-                    .strafeTo(new Vector2d(30,-56))
                     .waitSeconds(1)
                     .lineTo(new Vector2d(50,-56))
                     .build();

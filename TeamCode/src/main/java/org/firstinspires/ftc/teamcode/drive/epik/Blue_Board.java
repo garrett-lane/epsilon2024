@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(group = "main")
+@Autonomous(group = "main", preselectTeleOp = "DriveBy")
 public class Blue_Board extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -30,11 +30,12 @@ public class Blue_Board extends LinearOpMode {
     private Servo dump;
     private Servo leftClaw;
     private Servo rightClaw;
+    private Servo pwane;
 
     float tgeLocation;
     boolean USE_WEBCAM;
 
-    private static final String[] LABELS = {"cone"};
+    private static final String[] LABELS = {"blue"};
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     @Override
@@ -58,6 +59,7 @@ public class Blue_Board extends LinearOpMode {
         dump = hardwareMap.get(Servo.class, "dump");
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
+        pwane = hardwareMap.get(Servo.class, "pwane");
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -70,6 +72,7 @@ public class Blue_Board extends LinearOpMode {
         dump.setPosition(0.3);
         arm1.setPosition(0.87);
         arm2.setPosition(0.09);
+        pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
 
@@ -234,8 +237,8 @@ public class Blue_Board extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(5)
-                    .back(5)
+                    .forward(4.5)
+                    .back(4.5)
                     .strafeLeft(5)
                     .turn(Math.toRadians(135))
                     .addDisplacementMarker(()->{
@@ -292,7 +295,7 @@ public class Blue_Board extends LinearOpMode {
     private void initTfod() {
 
         tfod = new TfodProcessor.Builder()
-                .setModelAssetName("7258v3.tflite")
+                .setModelAssetName("blue_v1.tflite")
                 .setModelLabels(LABELS)
                 .setModelInputSize(300)
                 .build();

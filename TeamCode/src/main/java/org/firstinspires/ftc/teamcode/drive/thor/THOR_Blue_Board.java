@@ -20,7 +20,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Config
-@Autonomous(group = "thor")
+@Autonomous(group = "thor", preselectTeleOp = "DriveBy")
 public class THOR_Blue_Board extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -32,6 +32,7 @@ public class THOR_Blue_Board extends LinearOpMode {
     private Servo dump;
     private Servo leftClaw;
     private Servo rightClaw;
+    private Servo pwane;
 
     float tgeLocation;
     boolean USE_WEBCAM;
@@ -60,6 +61,7 @@ public class THOR_Blue_Board extends LinearOpMode {
         dump = hardwareMap.get(Servo.class, "dump");
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
+        pwane = hardwareMap.get(Servo.class, "pwane");
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -72,6 +74,7 @@ public class THOR_Blue_Board extends LinearOpMode {
         dump.setPosition(0.3);
         arm1.setPosition(0.89);
         arm2.setPosition(0.09);
+        pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
 
@@ -126,7 +129,7 @@ public class THOR_Blue_Board extends LinearOpMode {
                     .lineToLinearHeading(new Pose2d(16, 58, Math.toRadians(0)))
                     .addDisplacementMarker(()->{
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (4.5 * 385));
+                        slide.setTargetPosition((int) (4.75 * 385));
                     })
                     .waitSeconds(7)
                     .lineTo(new Vector2d(32,36))
@@ -184,7 +187,7 @@ public class THOR_Blue_Board extends LinearOpMode {
                     .lineToLinearHeading(new Pose2d(38, 58, Math.toRadians(0)))
                     .addDisplacementMarker(()->{
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (4.5 * 385));
+                        slide.setTargetPosition((int) (4.75 * 385));
                     })
                     .waitSeconds(10)
                     .lineTo(new Vector2d(31,30))
@@ -239,15 +242,15 @@ public class THOR_Blue_Board extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(6)
-                    .back(6)
+                    .forward(5.5)
+                    .back(5.5)
                     .turn(Math.toRadians(45))
                     .lineToLinearHeading(new Pose2d(38, 58, Math.toRadians(0)))
                     .addDisplacementMarker(()->{
                         slide.setPower(0.5);
-                        slide.setTargetPosition((int) (4.5 * 385));
+                        slide.setTargetPosition((int) (4.75 * 385));
                     })
-                    .waitSeconds(10)
+                    .waitSeconds(8)
                     .lineTo(new Vector2d(32,26))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
@@ -313,7 +316,7 @@ public class THOR_Blue_Board extends LinearOpMode {
 
         builder.addProcessor(tfod);
         visionPortal = builder.build();
-        tfod.setMinResultConfidence(0.6f);
+        tfod.setMinResultConfidence(0.5f);
     }
 
     private void OperateClaw(int side, int status) {
