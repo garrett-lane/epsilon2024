@@ -70,9 +70,9 @@ public class Red_Board extends LinearOpMode {
         slide.setTargetPosition(0);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setDirection(DcMotor.Direction.FORWARD);
-        dump.setPosition(0.3);
-        arm1.setPosition(0.89);
-        arm2.setPosition(0.09);
+        dump.setPosition(0.33);
+        arm1.setPosition(0.86);
+        arm2.setPosition(0.12);
         pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);

@@ -61,14 +61,14 @@ public class DriveConstants {
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
-     * the constraints should never exceed ~80% of the robot's actual capabilities. While Road
+     * the constraints should never exceed ~80% ofv the robot's actual capabilities. While Road
      * Runner is designed to enable faster autonomous motion, it is a good idea for testing to start
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 62;
-    public static double MAX_ACCEL = 90;
-    public static double MAX_ANG_VEL = Math.toRadians(301.1432806137491);
+    public static double MAX_VEL = 63.69;
+    public static double MAX_ACCEL = 85;
+    public static double MAX_ANG_VEL = Math.toRadians(255.1432806137491);
     public static double MAX_ANG_ACCEL = Math.toRadians(263.7579466568125);
 
     /*

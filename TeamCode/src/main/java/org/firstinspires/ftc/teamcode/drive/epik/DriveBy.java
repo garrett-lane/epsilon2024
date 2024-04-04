@@ -1,3 +1,6 @@
+// arm2 - closer to plane launcher; higher value, farther out
+// arm1 - closer to hubs; higher value, farther in
+
 package org.firstinspires.ftc.teamcode.drive.epik;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,6 +26,8 @@ public class DriveBy extends LinearOpMode {
     private DcMotor hook;
     private DcMotor intake;
     private Servo pwane;
+    private Servo flipperL;
+    private Servo flipperR;
 
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
@@ -49,14 +54,17 @@ public class DriveBy extends LinearOpMode {
         hook = hardwareMap.get(DcMotor.class, "hook");
         pwane = hardwareMap.get(Servo.class, "pwane");
         intake = hardwareMap.get(DcMotor.class, "intake");
+        flipperL = hardwareMap.get(Servo.class, "flipperL");
+        flipperR = hardwareMap.get(Servo.class, "flipperR");
+
 
         Claw_on_Ground = false;
         turboSpeed = 1;
         normalSpeed = 0.5;
         slomoSpeed = 0.2;
-        dump.setPosition(0.3);
-        arm1.setPosition(0.89);
-        arm2.setPosition(0.09);
+        dump.setPosition(0.33);
+        arm1.setPosition(0.86);
+        arm2.setPosition(0.12);
         lclaw.setPosition(0.81);
         rclaw.setPosition(0.27);
         slide.setTargetPosition(0);
@@ -70,6 +78,8 @@ public class DriveBy extends LinearOpMode {
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        flipperL.setPosition(1);
+        flipperR.setPosition(0.05);
         waitForStart();
         while (opModeIsActive()) {
             fl.setDirection(DcMotor.Direction.REVERSE);
@@ -109,10 +119,6 @@ public class DriveBy extends LinearOpMode {
                     lclaw.setPosition(0.81);
                     // close
                     rclaw.setPosition(0.26);
-                    sleep(300);
-                    dump.setPosition(0.7);
-                    arm1.setPosition(0.89);
-                    arm2.setPosition(0.1);
                 } else {
                     // close
                     lclaw.setPosition(0.81);
@@ -167,24 +173,24 @@ public class DriveBy extends LinearOpMode {
                 arm2.setPosition(0.6);
             } else {
                 if (!Claw_on_Ground) {
-                    arm1.setPosition(0.89);
-                    arm2.setPosition(0.09);
+                    arm1.setPosition(0.86); // decrease; orig .89
+                    arm2.setPosition(0.12); // increase; orig .09
                 }
             }
             // Magazine - Servo
             if (gamepad2.a) {
                 // Lower to Grab
-                arm1.setPosition(0.81);
+             /* arm1.setPosition(0.81);
                 arm2.setPosition(0.16);
                 dump.setPosition(0.37);
-                intake.setPower(0.7);
+             */ intake.setPower(0.7);
             } else if (gamepad2.square) {
                 dump.setPosition(0.50);
             } else if (gamepad2.circle) {
                 dump.setPosition(0.70);
             } else {
                 if (!Claw_on_Ground) {
-                    dump.setPosition(0.3);
+                    dump.setPosition(0.33); // orig .3
                 }
                 intake.setPower(0.0);
             }
@@ -192,6 +198,14 @@ public class DriveBy extends LinearOpMode {
                 pwane.setPosition(.05);
             } else if (gamepad1.dpad_down) {
                 pwane.setPosition(.5);
+            }
+            // flippies
+            if (gamepad2.y) {
+                flipperL.setPosition(0.46);
+                flipperR.setPosition(0.55);
+            } else {
+                flipperL.setPosition(1);
+                flipperR.setPosition(0.05);
             }
         }
         telemetry.update();
