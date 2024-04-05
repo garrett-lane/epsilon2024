@@ -127,7 +127,7 @@ public class Red_Board extends LinearOpMode {
                        slide.setPower(0.5);
                        slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(30,-26.5),
+                    .lineTo(new Vector2d(30,-29),
                             SampleMecanumDrive.getVelocityConstraint(35, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(35))
                     .build();
@@ -155,7 +155,7 @@ public class Red_Board extends LinearOpMode {
                         })
                         .waitSeconds(1)
                         .back(distanceFromBoard)
-                        .strafeTo(new Vector2d(30,-56))
+                        .strafeTo(new Vector2d(30,-58))
                         .addTemporalMarker(4, () -> {
                             OperateClaw(0, 0);
                             OperateClaw(1, 0);
@@ -168,7 +168,7 @@ public class Red_Board extends LinearOpMode {
                             slide.setTargetPosition((int) (0));
                         })
                         .waitSeconds(2)
-                        .lineTo(new Vector2d(56,-56))
+                        .lineTo(new Vector2d(56,-58))
                         .build();
 
                  drive.followTrajectorySequence(trajSeq);
@@ -188,7 +188,7 @@ public class Red_Board extends LinearOpMode {
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(32,-32),
+                    .lineTo(new Vector2d(32,-34),
                             SampleMecanumDrive.getVelocityConstraint(35, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(35))
                     .build();
@@ -213,7 +213,7 @@ public class Red_Board extends LinearOpMode {
                     })
                     .waitSeconds(1)
                     .back(distanceFromBoard)
-                    .strafeTo(new Vector2d(30,-56))
+                    .strafeTo(new Vector2d(30,-58))
                     .addTemporalMarker( 4, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -226,7 +226,7 @@ public class Red_Board extends LinearOpMode {
                         slide.setTargetPosition((int) (0));
                     })
                     .waitSeconds(2)
-                    .lineTo(new Vector2d(56,-56))
+                    .lineTo(new Vector2d(56,-58))
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);
@@ -246,7 +246,7 @@ public class Red_Board extends LinearOpMode {
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(30,-38),
+                    .lineTo(new Vector2d(30,-41),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
@@ -271,7 +271,7 @@ public class Red_Board extends LinearOpMode {
                     })
                     .waitSeconds(1)
                     .back(distanceFromBoard)
-                    .strafeTo(new Vector2d(30,-56))
+                    .strafeTo(new Vector2d(30,-58))
                     .addTemporalMarker( 4, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -284,7 +284,7 @@ public class Red_Board extends LinearOpMode {
                         slide.setTargetPosition((int) (0));
                     })
                     .waitSeconds(2)
-                    .lineTo(new Vector2d(56,-56))
+                    .lineTo(new Vector2d(56,-58))
                     .build();
             drive.followTrajectorySequence(trajSeq);
             drive.followTrajectorySequence(On_Board);

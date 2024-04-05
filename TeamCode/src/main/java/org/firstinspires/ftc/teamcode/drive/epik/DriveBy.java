@@ -1,6 +1,3 @@
-// arm2 - closer to plane launcher; higher value, farther out
-// arm1 - closer to hubs; higher value, farther in
-
 package org.firstinspires.ftc.teamcode.drive.epik;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -29,9 +26,6 @@ public class DriveBy extends LinearOpMode {
     private Servo flipperL;
     private Servo flipperR;
 
-    /**
-     * This function is executed when this Op Mode is selected from the Driver Station.
-     */
     @Override
     public void runOpMode() {
         boolean Claw_on_Ground;
@@ -62,9 +56,9 @@ public class DriveBy extends LinearOpMode {
         turboSpeed = 1;
         normalSpeed = 0.5;
         slomoSpeed = 0.2;
-        dump.setPosition(0.33);
-        arm1.setPosition(0.86);
-        arm2.setPosition(0.12);
+        dump.setPosition(0.3);
+        arm1.setPosition(0.89);
+        arm2.setPosition(0.09);
         lclaw.setPosition(0.81);
         rclaw.setPosition(0.27);
         slide.setTargetPosition(0);
@@ -75,29 +69,64 @@ public class DriveBy extends LinearOpMode {
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         intake.setDirection(DcMotor.Direction.REVERSE);
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fl.setDirection(DcMotor.Direction.REVERSE);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setDirection(DcMotor.Direction.FORWARD);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setDirection(DcMotor.Direction.REVERSE);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setDirection(DcMotor.Direction.FORWARD);
         flipperL.setPosition(1);
         flipperR.setPosition(0.05);
         waitForStart();
         while (opModeIsActive()) {
-            fl.setDirection(DcMotor.Direction.REVERSE);
-            fr.setDirection(DcMotor.Direction.FORWARD);
-            bl.setDirection(DcMotor.Direction.REVERSE);
-            br.setDirection(DcMotor.Direction.FORWARD);
             // Gamepad 1
+            // slomo
             if (gamepad1.right_bumper) {
                 Sticks(slomoSpeed);
             } else {
                 Sticks(normalSpeed);
             }
+            // turbo
             if (gamepad1.right_trigger > 0) {
                 Sticks(turboSpeed);
             } else {
                 Sticks(normalSpeed);
             }
+            // Lift - motor
+            if (gamepad1.triangle) {
+                lift.setPower(1);
+            } else if (gamepad1.a) {
+                lift.setPower(-0.5);
+            } else {
+                lift.setPower(0);
+            }
+            // hook - motor
+            if (gamepad1.circle) {
+                hook.setPower(0.7);
+            } else if (gamepad1.square) {
+                hook.setPower(-0.7);
+            } else {
+                hook.setPower(0);
+            }
+            // plane launcher
+            if (gamepad1.dpad_up) {
+                pwane.setPosition(.05);
+            } else if (gamepad1.dpad_down) {
+                pwane.setPosition(.5);
+            }
+
             // Gamepad 2
+            // arm2 - closer to plane launcher; higher value, farther out
+            // arm1 - closer to hubs; higher value, farther in
+            // flippies
+            if (gamepad2.dpad_left) {
+                flipperL.setPosition(0.46);
+                flipperR.setPosition(0.55);
+            } else {
+                flipperL.setPosition(1);
+                flipperR.setPosition(0.05);
+            }
             // Claw
             if (gamepad2.right_bumper) {
                 // open
@@ -118,7 +147,7 @@ public class DriveBy extends LinearOpMode {
                     // close
                     lclaw.setPosition(0.81);
                     // close
-                    rclaw.setPosition(0.26);
+                    rclaw.setPosition(0.27);
                 } else {
                     // close
                     lclaw.setPosition(0.81);
@@ -126,22 +155,7 @@ public class DriveBy extends LinearOpMode {
                     rclaw.setPosition(0.27);
                 }
             }
-            // Lift - motor
-            if (gamepad1.triangle) {
-                lift.setPower(1);
-            } else if (gamepad1.a) {
-                lift.setPower(-0.5);
-            } else {
-                lift.setPower(0);
-            }
-            // hook - motor
-            if (gamepad1.circle) {
-                hook.setPower(0.7);
-            } else if (gamepad1.square) {
-                hook.setPower(-0.7);
-            } else {
-                hook.setPower(0);
-            }
+
             // Sliderail - motor
             if (gamepad2.right_trigger > 0) {
                 SlideRailSpeed = 0.5;
@@ -164,6 +178,7 @@ public class DriveBy extends LinearOpMode {
                 slide.setPower(0);
                 slide.setTargetPosition(0);
             }
+
             // Arm - motor
             if (gamepad2.circle) {
                 arm1.setPosition(0.18);
@@ -173,39 +188,27 @@ public class DriveBy extends LinearOpMode {
                 arm2.setPosition(0.6);
             } else {
                 if (!Claw_on_Ground) {
-                    arm1.setPosition(0.86); // decrease; orig .89
-                    arm2.setPosition(0.12); // increase; orig .09
+                    arm1.setPosition(0.88); // decrease; orig .89
+                    arm2.setPosition(0.11); // increase; orig .09
                 }
             }
+
             // Magazine - Servo
             if (gamepad2.a) {
                 // Lower to Grab
-             /* arm1.setPosition(0.81);
-                arm2.setPosition(0.16);
-                dump.setPosition(0.37);
-             */ intake.setPower(0.7);
+                dump.setPosition(0.33);
+                arm1.setPosition(0.86);
+                arm2.setPosition(0.13);
+                intake.setPower(0.7);
             } else if (gamepad2.square) {
                 dump.setPosition(0.50);
             } else if (gamepad2.circle) {
                 dump.setPosition(0.70);
             } else {
                 if (!Claw_on_Ground) {
-                    dump.setPosition(0.33); // orig .3
+                    dump.setPosition(0.3); // orig .3
                 }
                 intake.setPower(0.0);
-            }
-            if (gamepad1.dpad_up) {
-                pwane.setPosition(.05);
-            } else if (gamepad1.dpad_down) {
-                pwane.setPosition(.5);
-            }
-            // flippies
-            if (gamepad2.y) {
-                flipperL.setPosition(0.46);
-                flipperR.setPosition(0.55);
-            } else {
-                flipperL.setPosition(1);
-                flipperR.setPosition(0.05);
             }
         }
         telemetry.update();
