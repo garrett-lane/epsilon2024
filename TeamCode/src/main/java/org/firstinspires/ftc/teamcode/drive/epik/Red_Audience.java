@@ -135,7 +135,7 @@ public class Red_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(9)
-                    .lineTo(new Vector2d(34, -26),
+                    .lineTo(new Vector2d(34, -28),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                     )
@@ -205,7 +205,7 @@ public class Red_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(8.5)
-                    .lineTo(new Vector2d(32,-39),
+                    .lineTo(new Vector2d(32,-41),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
@@ -278,7 +278,7 @@ public class Red_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(7)
-                    .lineTo(new Vector2d(34, -40),
+                    .lineTo(new Vector2d(34, -42),
                             SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(25))
                                     //Limits to 30 in/s and 30 in/s^2

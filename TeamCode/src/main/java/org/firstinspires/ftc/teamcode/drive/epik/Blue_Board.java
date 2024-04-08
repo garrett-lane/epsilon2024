@@ -127,10 +127,9 @@ public class Blue_Board extends LinearOpMode {
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(32,38))
+                    .lineTo(new Vector2d(32,40))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
-            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                    /* .addTemporalMarker(0, () -> {
                         slide.setPower(0.5);
@@ -153,7 +152,7 @@ public class Blue_Board extends LinearOpMode {
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .strafeTo(new Vector2d(30,56))
+                    .strafeTo(new Vector2d(30,58))
                     .addTemporalMarker( 4, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -166,7 +165,7 @@ public class Blue_Board extends LinearOpMode {
                         slide.setTargetPosition((int) (0));
                     })
                     .waitSeconds(2)
-                    .lineTo(new Vector2d(56,56))
+                    .lineTo(new Vector2d(56,58))
                     .build();
 
             drive.followTrajectorySequence(trajSeq);
@@ -185,7 +184,7 @@ public class Blue_Board extends LinearOpMode {
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(31,30))
+                    .lineTo(new Vector2d(31,32))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -211,7 +210,7 @@ public class Blue_Board extends LinearOpMode {
                     })
                     .waitSeconds(1.5)
                     .back(distanceFromBoard)
-                    .strafeTo(new Vector2d(30,56))
+                    .strafeTo(new Vector2d(30,58))
                     .addTemporalMarker( 4, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -224,7 +223,7 @@ public class Blue_Board extends LinearOpMode {
                         slide.setTargetPosition((int) (0));
                     })
                     .waitSeconds(2)
-                    .lineTo(new Vector2d(56,56))
+                    .lineTo(new Vector2d(56,58))
                     .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);
@@ -245,7 +244,7 @@ public class Blue_Board extends LinearOpMode {
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
                     })
-                    .lineTo(new Vector2d(32,26))
+                    .lineTo(new Vector2d(32,28))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
@@ -271,7 +270,7 @@ public class Blue_Board extends LinearOpMode {
                     })
                     .waitSeconds(1)
                     .back(distanceFromBoard)
-                    .strafeTo(new Vector2d(30,56))
+                    .strafeTo(new Vector2d(30,58))
                     .addTemporalMarker( 4, () -> {
                         OperateClaw(0, 0);
                         OperateClaw(1, 0);
@@ -284,7 +283,7 @@ public class Blue_Board extends LinearOpMode {
                         slide.setTargetPosition((int) (0));
                     })
                     .waitSeconds(2)
-                    .lineTo(new Vector2d(56,56))
+                    .lineTo(new Vector2d(56,58))
                     .waitSeconds(7)
                     .build();
             drive.followTrajectorySequence(trajSeq);

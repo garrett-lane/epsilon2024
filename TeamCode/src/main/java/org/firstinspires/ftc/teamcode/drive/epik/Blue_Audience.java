@@ -133,7 +133,7 @@ public class Blue_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(8)
-                    .lineTo(new Vector2d(36, 42),
+                    .lineTo(new Vector2d(36, 44),
                             SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(25)
                     )
@@ -205,7 +205,7 @@ public class Blue_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(8)
-                    .lineTo(new Vector2d(34, 36),
+                    .lineTo(new Vector2d(34, 38),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
@@ -274,28 +274,13 @@ public class Blue_Audience extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(9)
-                    .lineTo(new Vector2d(35, 25),
+                    .lineTo(new Vector2d(35, 28),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
             distanceFromBoard = 4.5; // do not set me to 0 - I will kill your code
             slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
-                    /*.addTemporalMarker(0, () -> {
-                        slide.setPower(0.5);
-                        slide.setTargetPosition((int) (slideHeight * 385));
-                    })
-                    .addTemporalMarker(2, () -> {
-                        arm1.setPosition(0.4);
-                        arm2.setPosition(0.56);
-                        dump.setPosition(0.49);
-                    })
-                    .waitSeconds(3)*/
-                    /* .lineTo(new Vector2d(38, 28),
-                            SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                            SampleMecanumDrive.getAccelerationConstraint(10)
-                            //Limits to 10 in/s and 10 in/s^2
-                    ) */
                     .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(25)
