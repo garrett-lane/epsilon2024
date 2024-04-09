@@ -146,7 +146,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         //arm1.setPosition(0.89);
                         //arm2.setPosition(0.09);
                     })
-                    .lineTo(new Vector2d(36,10))
+                    .lineTo(new Vector2d(34,10))
                     .addTemporalMarker(11,()->{
                         slide.setPower(0.5);
                         slide.setTargetPosition((int) (4.5 * 385));
@@ -157,7 +157,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(8)
-                    .lineTo(new Vector2d(36, 44),
+                    .lineTo(new Vector2d(34, 44),
                             SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(25)
                     )
@@ -300,14 +300,14 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
             drive.followTrajectorySequence(On_Board);
         } else { //Location 3, Right Side
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(26,
+                    .forward(25,
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30)
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(-45))
-                    .forward(6)
-                    .back(6)
+                    .forward(8)
+                    .back(8)
                     .turn(Math.toRadians(45))
                     .lineTo(new Vector2d(-34,10))
                     .turn(Math.toRadians(90))
@@ -346,7 +346,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         dump.setPosition(0.49);
                     })
                     .waitSeconds(7)
-                    .lineTo(new Vector2d(35, 28),
+                    .lineTo(new Vector2d(34, 25),
                             SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();

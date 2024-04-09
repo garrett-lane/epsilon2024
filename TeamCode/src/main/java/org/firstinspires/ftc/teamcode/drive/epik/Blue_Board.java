@@ -119,8 +119,8 @@ public class Blue_Board extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(45))
-                    .forward(6)
-                    .back(6)
+                    .forward(9)
+                    .back(9)
                     .strafeLeft(6)
                     .turn(Math.toRadians(45))
                     .addDisplacementMarker(()->{

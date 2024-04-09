@@ -21,8 +21,8 @@ public class DriveBy extends LinearOpMode {
     private DcMotor bl;
     private DcMotor br;
     private DcMotor hook;
-    private DcMotor intake;
     private Servo pwane;
+    private DcMotor intake;
     private Servo flipperL;
     private Servo flipperR;
 

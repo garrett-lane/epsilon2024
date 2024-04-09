@@ -31,6 +31,9 @@ public class Blue_Board_Extra_White extends LinearOpMode {
     private Servo leftClaw;
     private Servo rightClaw;
     private Servo pwane;
+    private DcMotor intake;
+    private Servo flipperL;
+    private Servo flipperR;
 
     float tgeLocation;
     boolean USE_WEBCAM;
@@ -60,6 +63,9 @@ public class Blue_Board_Extra_White extends LinearOpMode {
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
         pwane = hardwareMap.get(Servo.class, "pwane");
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        flipperL = hardwareMap.get(Servo.class, "flipperL");
+        flipperR = hardwareMap.get(Servo.class, "flipperR");
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -119,8 +125,8 @@ public class Blue_Board_Extra_White extends LinearOpMode {
                             //Limits to 30 in/s and 30 in/s^2
                     )
                     .turn(Math.toRadians(45))
-                    .forward(6)
-                    .back(6)
+                    .forward(9)
+                    .back(9)
                     .strafeLeft(6)
                     .turn(Math.toRadians(45))
                     .addDisplacementMarker(()->{
@@ -167,29 +173,29 @@ public class Blue_Board_Extra_White extends LinearOpMode {
                     .waitSeconds(2)
                     .build();
             TrajectorySequence Pixel_Retrieval = drive.trajectorySequenceBuilder (On_Board.end())
-                    .lineTo(new Vector2d(-60,58))
-                    .lineTo(new Vector2d(-60,38))
+                    .lineTo(new Vector2d(-58,58))
+                    .lineTo(new Vector2d(-58,38))
                     .back(2)
                     .waitSeconds(1)
                     .addTemporalMarker(5,()->{
-                        //dump.setPosition(0.33);
-                        //arm1.setPosition(0.86);
-                        //arm2.setPosition(0.13);
-                        //intake.setPower(0.7);
-                        //OperateClaw(1, 1);
-                        //OperateClaw(0,1);
+                        dump.setPosition(0.33);
+                        arm1.setPosition(0.86);
+                        arm2.setPosition(0.13);
+                        intake.setPower(0.7);
+                        OperateClaw(1, 1);
+                        OperateClaw(0,1);
                     })
                     .addTemporalMarker(5.5,()->{
-                        //flipperL.setPosition(0.46);
-                        //flipperR.setPosition(0.55);
+                        flipperL.setPosition(0.46);
+                        flipperR.setPosition(0.55);
                     })
                     .addTemporalMarker(6,()->{
-                        //intake.setPower(0.0);
-                        //OperateClaw(1,0);
-                        //OperateClaw(0,0);
-                        //dump.setPosition(0.3);
-                        //arm1.setPosition(0.89);
-                        //arm2.setPosition(0.09);
+                        intake.setPower(0.0);
+                        OperateClaw(1,0);
+                        OperateClaw(0,0);
+                        dump.setPosition(0.3);
+                        arm1.setPosition(0.89);
+                        arm2.setPosition(0.09);
                     })
                     .lineTo(new Vector2d (-60,58))
                     .lineTo(new Vector2d (30,58))
