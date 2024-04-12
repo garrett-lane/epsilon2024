@@ -120,10 +120,13 @@ public class DriveBy extends LinearOpMode {
             // arm2 - closer to plane launcher; higher value, farther out
             // arm1 - closer to hubs; higher value, farther in
             // flippies
-            if (gamepad2.dpad_left) {
+            if (gamepad2.dpad_right) {
                 flipperL.setPosition(0.46);
                 flipperR.setPosition(0.55);
-            } else {
+            } /*else if (gamepad2.a) {
+                flipperR.setPosition(0.35);
+                flipperL.setPosition(0.72); //Dylon did not like this.
+            }*/ else {
                 flipperL.setPosition(1);
                 flipperR.setPosition(0.05);
             }
@@ -136,6 +139,7 @@ public class DriveBy extends LinearOpMode {
                 // open
                 lclaw.setPosition(0.66);
             } else if (gamepad2.a) {
+
                 // open
                 lclaw.setPosition(0.66);
                 // open
@@ -188,8 +192,8 @@ public class DriveBy extends LinearOpMode {
                 arm2.setPosition(0.6);
             } else {
                 if (!Claw_on_Ground) {
-                    arm1.setPosition(0.88); // decrease; orig .89
-                    arm2.setPosition(0.11); // increase; orig .09
+                    arm1.setPosition(0.89); // decrease; orig .89
+                    arm2.setPosition(0.09); // increase; orig .09
                 }
             }
 
@@ -209,6 +213,9 @@ public class DriveBy extends LinearOpMode {
                     dump.setPosition(0.3); // orig .3
                 }
                 intake.setPower(0.0);
+            }
+            if (gamepad2.left_trigger > 0) {
+                intake.setPower(-0.7);
             }
         }
         telemetry.update();

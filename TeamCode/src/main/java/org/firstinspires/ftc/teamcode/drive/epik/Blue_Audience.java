@@ -78,8 +78,16 @@ public class Blue_Audience extends LinearOpMode {
 
         // variables
         double distanceFromBoard;
-        double slideHeight;
 
+        // Trajectories
+        // Left, 1
+
+        // Middle, 2
+
+        // Right, 3
+
+
+        // Telemetry
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
         telemetry.addData("3-2-9, 3-2-9","15... 20!");
@@ -139,18 +147,7 @@ public class Blue_Audience extends LinearOpMode {
                     )
                     .build();
             distanceFromBoard = 3; // do not set me to 0 - I will kill your code
-            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
-                    /*.addTemporalMarker(0, () -> {
-                        slide.setPower(0.5);
-                        slide.setTargetPosition((int) (slideHeight * 385));
-                    })*/
-                    /*.addTemporalMarker(0, () -> {
-                        arm1.setPosition(0.4);
-                        arm2.setPosition(0.56);
-                        dump.setPosition(0.49);
-                    })*/
-                    //.waitSeconds(1)
                     .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(20)
@@ -210,18 +207,7 @@ public class Blue_Audience extends LinearOpMode {
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
             distanceFromBoard = 4; // do not set me to 0 - I will kill your code
-            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
-                  /*  .addTemporalMarker(0, () -> {
-                        slide.setPower(0.5);
-                        slide.setTargetPosition((int) (slideHeight * 385));
-                    })
-                    .addTemporalMarker(2, () -> {
-                        arm1.setPosition(0.4);
-                        arm2.setPosition(0.56);
-                        dump.setPosition(0.49);
-                    })*/
-                    //.waitSeconds(0)
                     .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                             SampleMecanumDrive.getAccelerationConstraint(20)
@@ -279,7 +265,6 @@ public class Blue_Audience extends LinearOpMode {
                             SampleMecanumDrive.getAccelerationConstraint(30))
                     .build();
             distanceFromBoard = 4.5; // do not set me to 0 - I will kill your code
-            slideHeight = 4.5;
             TrajectorySequence On_Board = drive.trajectorySequenceBuilder (trajSeq.end())
                     .forward(distanceFromBoard,
                             SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
