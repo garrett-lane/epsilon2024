@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive.epik_extra_whites;
 
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
 @Autonomous(group = "main", preselectTeleOp = "DriveBy")
+@Disabled 
 public class Blue_Board_Extra_White extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;

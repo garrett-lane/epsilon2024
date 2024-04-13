@@ -151,11 +151,15 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         SampleMecanumDrive.getAccelerationConstraint(20)
                         //Limits to 10 in/s and 10 in/s^2
                 )
-                .addTemporalMarker(1, () -> {
+                .addTemporalMarker(.5, () -> {
                     OperateClaw(0, 1);
-                    OperateClaw(1, 1);
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(.5)
+                .strafeRight(12)
+                .addTemporalMarker(1.5,()->{
+                    OperateClaw(1,1);
+                })
+                .waitSeconds(1)
                 .back(distanceFromBoard)
                 .strafeTo(new Vector2d(36,12))
                 .addTemporalMarker( 3, () -> {
@@ -232,11 +236,15 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         SampleMecanumDrive.getAccelerationConstraint(20)
                         //Limits to 20 in/s and 20 in/s^2
                 )
-                .addTemporalMarker(1, () -> {
+                .addTemporalMarker(.5, () -> {
                     OperateClaw(0, 1);
-                    OperateClaw(1, 1);
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(.5)
+                .strafeLeft(6)
+                .addTemporalMarker(1.5,()->{
+                    OperateClaw(1,1);
+                })
+                .waitSeconds(1)
                 .back(distanceFromBoard)
                 .addTemporalMarker( 3, () -> {
                     OperateClaw(0, 0);
@@ -326,7 +334,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                 .addTemporalMarker(2.5, () -> {
                     OperateClaw(1, 1);
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.5)
                 .back(distanceFromBoard)
                 .strafeTo(new Vector2d(34,8))
                 .addTemporalMarker( 4, () -> {
