@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.drive.epik;
+package org.firstinspires.ftc.teamcode.drive.epik_code;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -166,10 +165,11 @@ public class DriveBy extends LinearOpMode {
             } else {
                 SlideRailSpeed = 1;
             }
+
             if (gamepad2.dpad_down) {
                 // Sliderail down
                 slide.setPower(-SlideRailSpeed);
-                slide.setTargetPosition(0);
+                slide.setTargetPosition((int) (-8.1 * 385));
             } else if (gamepad2.dpad_up) {
                 // Sliderail up
                 slide.setPower(SlideRailSpeed);
@@ -192,15 +192,15 @@ public class DriveBy extends LinearOpMode {
                 arm2.setPosition(0.6);
             } else {
                 if (!Claw_on_Ground) {
-                    arm1.setPosition(0.89); // decrease; orig .89
-                    arm2.setPosition(0.09); // increase; orig .09
+                    arm1.setPosition(0.87); // decrease; orig .89
+                    arm2.setPosition(0.11); // increase; orig .09
                 }
             }
 
             // Magazine - Servo
             if (gamepad2.a) {
                 // Lower to Grab
-                dump.setPosition(0.33);
+                dump.setPosition(0.34);
                 arm1.setPosition(0.86);
                 arm2.setPosition(0.13);
                 intake.setPower(0.7);
@@ -210,7 +210,7 @@ public class DriveBy extends LinearOpMode {
                 dump.setPosition(0.70);
             } else {
                 if (!Claw_on_Ground) {
-                    dump.setPosition(0.3); // orig .3
+                    dump.setPosition(0.32); // orig .3
                 }
                 intake.setPower(0.0);
             }

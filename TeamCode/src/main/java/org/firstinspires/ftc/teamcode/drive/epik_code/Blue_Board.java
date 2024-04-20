@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.drive.epik_extra_whites;
+package org.firstinspires.ftc.teamcode.drive.epik_code;
 
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -20,7 +19,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
 @Autonomous(group = "main", preselectTeleOp = "DriveBy")
-public class Blue_Audience_Extra_White extends LinearOpMode {
+public class Blue_Board extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
@@ -32,7 +31,6 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
     private Servo leftClaw;
     private Servo rightClaw;
     private Servo pwane;
-    private DcMotor intake;
     private Servo flipperL;
     private Servo flipperR;
 
@@ -45,7 +43,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        Pose2d startPose = new Pose2d(-34, 60, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(10, 60, Math.toRadians(-90));
         drive.setPoseEstimate(startPose);
 
         // tensorflow initialization
@@ -64,9 +62,10 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
         leftClaw = hardwareMap.get(Servo.class, "lclaw");
         rightClaw = hardwareMap.get(Servo.class, "rclaw");
         pwane = hardwareMap.get(Servo.class, "pwane");
-        intake = hardwareMap.get(DcMotor.class, "intake");
         flipperL = hardwareMap.get(Servo.class, "flipperL");
         flipperR = hardwareMap.get(Servo.class, "flipperR");
+        flipperL.setPosition(1);
+        flipperR.setPosition(0.05);
 
         // Initialization behavior and positions
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -76,15 +75,12 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
         slide.setTargetPosition(0);
         slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slide.setDirection(DcMotor.Direction.FORWARD);
-        intake.setDirection(DcMotorSimple.Direction.REVERSE);
         dump.setPosition(0.33);
         arm1.setPosition(0.86);
         arm2.setPosition(0.12);
         pwane.setPosition(.05);
         OperateClaw(0, 0);
         OperateClaw(1, 0);
-        flipperL.setPosition(1);
-        flipperR.setPosition(0.05);
 
         // variables
         double distanceFromBoard;
@@ -92,174 +88,109 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
         // Trajectories
         // Left, 1
         TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose)
-                .forward(26,
+                .forward(25,
                         SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         //Limits to 30 in/s and 30 in/s^2
                 )
                 .turn(Math.toRadians(45))
-                .forward(7)
-                .back(12)
+                .forward(9)
+                .back(9)
+                .strafeLeft(6)
                 .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-34,10))
-                .lineTo(new Vector2d(-61,13.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
-                .waitSeconds(1.5)
-                .addTemporalMarker(7,()->{
-                    dump.setPosition(0.33);
-                    arm1.setPosition(0.86);
-                    arm2.setPosition(0.13);
-                    intake.setPower(0.7);
-                    OperateClaw(1, 1);
-                })
-                .addTemporalMarker(7.5,()->{
-                    flipperL.setPosition(0.46);
-                    flipperR.setPosition(0.55);
-                })
-                .addTemporalMarker(8.5,()->{
-                    intake.setPower(0.0);
-                    OperateClaw(1, 0);
-                    dump.setPosition(0.3);
-                    arm1.setPosition(0.89);
-                    arm2.setPosition(0.09);
-                    flipperL.setPosition(1);
-                    flipperR.setPosition(0.05);
-                })
-                .lineTo(new Vector2d(34,10))
-                .addTemporalMarker(11,()->{
+                .addDisplacementMarker(()->{
                     slide.setPower(0.5);
                     slide.setTargetPosition((int) (4.5 * 385));
                 })
-                .addTemporalMarker(13,()->{
+                .lineTo(new Vector2d(32,40))
+                .build();
+        distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+        TrajectorySequence On_Board1 = drive.trajectorySequenceBuilder (trajSeq1.end())
+                /* .addTemporalMarker(0, () -> {
+                     slide.setPower(0.5);
+                     slide.setTargetPosition((int) (slideHeight * 385));
+                 })*/
+                .addTemporalMarker(0, () -> {
                     arm1.setPosition(0.4);
                     arm2.setPosition(0.56);
                     dump.setPosition(0.49);
                 })
-                .waitSeconds(4)
-                .lineTo(new Vector2d(34, 44),
-                        SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(25)
-                )
-                .build();
-        distanceFromBoard = 3; // do not set me to 0 - I will kill your code
-        TrajectorySequence On_Board1 = drive.trajectorySequenceBuilder (trajSeq1.end())
+                .waitSeconds(1)
                 .forward(distanceFromBoard,
-                        SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(20)
+                        SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10)
                         //Limits to 10 in/s and 10 in/s^2
                 )
-                .addTemporalMarker(.5, () -> {
+                .addTemporalMarker(2, () -> {
                     OperateClaw(0, 1);
+                    OperateClaw(1, 1);
                 })
-                .waitSeconds(.5)
-                .strafeRight(12)
-                .addTemporalMarker(1.5,()->{
-                    OperateClaw(1,1);
-                })
-                .waitSeconds(1)
+                .waitSeconds(1.5)
                 .back(distanceFromBoard)
-                .strafeTo(new Vector2d(36,12))
-                .addTemporalMarker( 3, () -> {
+                .strafeTo(new Vector2d(30,58))
+                .addTemporalMarker( 4, () -> {
                     OperateClaw(0, 0);
                     OperateClaw(1, 0);
                     arm1.setPosition(0.89);
                     arm2.setPosition(0.09);
                     dump.setPosition(0.3);
                 })
-                .addTemporalMarker(4, () -> {
-                    slide.setPower(-0.7);
+                .addTemporalMarker(5, () -> {
+                    slide.setPower(-0.5);
                     slide.setTargetPosition((int) (0));
                 })
-                .waitSeconds(1)
-                .lineTo(new Vector2d(56,12))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(56,58))
                 .build();
         // Middle, 2
         TrajectorySequence trajSeq2 = drive.trajectorySequenceBuilder(startPose)
-                .forward(30,
+                .forward(31,
                         SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         //Limits to 30 in/s and 30 in/s^2
                 )
-                .back(10)
-                .strafeRight(4)
-                .splineTo(new Vector2d(-50,10),Math.toRadians(-90))
-                .back(1.5)
-                .lineTo(new Vector2d(-61,12),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
-                .waitSeconds(1.5)
-                .addTemporalMarker(7,()->{
-                    dump.setPosition(0.33);
-                    arm1.setPosition(0.86);
-                    arm2.setPosition(0.13);
-                    intake.setPower(0.7);
-                    OperateClaw(1, 1);
-                })
-                .addTemporalMarker(7.5,()->{
-                    flipperL.setPosition(0.46);
-                    flipperR.setPosition(0.55);
-                })
-                .addTemporalMarker(8.5,()->{
-                    intake.setPower(0.0);
-                    OperateClaw(1, 0);
-                    dump.setPosition(0.3);
-                    arm1.setPosition(0.89);
-                    arm2.setPosition(0.09);
-                    flipperL.setPosition(1);
-                    flipperR.setPosition(0.05);
-                })
-                .waitSeconds(1)
-                .lineTo(new Vector2d(34,12))
-                .addTemporalMarker(12,()->{
+                .back(7)
+                .turn(Math.toRadians(90))
+                .addDisplacementMarker(()->{
                     slide.setPower(0.5);
                     slide.setTargetPosition((int) (4.5 * 385));
                 })
-                .addTemporalMarker(14,()->{
+                .lineTo(new Vector2d(31,32))
+                .build();
+        distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+        TrajectorySequence On_Board2 = drive.trajectorySequenceBuilder (trajSeq2.end())
+                .addTemporalMarker(0, () -> {
                     arm1.setPosition(0.4);
                     arm2.setPosition(0.56);
                     dump.setPosition(0.49);
                 })
-                .waitSeconds(4)
-                .lineTo(new Vector2d(34, 38),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30))
-                .build();
-        distanceFromBoard = 4; // do not set me to 0 - I will kill your code
-        TrajectorySequence On_Board2 = drive.trajectorySequenceBuilder (trajSeq2.end())
-                .forward(distanceFromBoard,
-                        SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(20)
-                        //Limits to 20 in/s and 20 in/s^2
-                )
-                .addTemporalMarker(.5, () -> {
-                    OperateClaw(0, 1);
-                })
-                .waitSeconds(.5)
-                .strafeLeft(6)
-                .addTemporalMarker(1.5,()->{
-                    OperateClaw(1,1);
-                })
                 .waitSeconds(1)
+                .forward(distanceFromBoard,
+                        SampleMecanumDrive.getVelocityConstraint(10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10)
+                        //Limits to 10 in/s and 10 in/s^2
+                )
+                .addTemporalMarker(2, () -> {
+                    OperateClaw(0, 1);
+                    OperateClaw(1, 1);
+                })
+                .waitSeconds(1.5)
                 .back(distanceFromBoard)
-                .addTemporalMarker( 3, () -> {
+                .strafeTo(new Vector2d(30,58))
+                .addTemporalMarker( 4, () -> {
                     OperateClaw(0, 0);
                     OperateClaw(1, 0);
                     arm1.setPosition(0.89);
                     arm2.setPosition(0.09);
                     dump.setPosition(0.3);
                 })
-                .addTemporalMarker(4, () -> {
-                    slide.setPower(-0.7);
+                .addTemporalMarker(5, () -> {
+                    slide.setPower(-0.5);
                     slide.setTargetPosition((int) (0));
                 })
-                .strafeTo(new Vector2d(34,12))
-                .waitSeconds(1)
-                .lineTo(new Vector2d(56,12))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(56,58))
+                .waitSeconds(7)
                 .build();
         // Right, 3
         TrajectorySequence trajSeq3 = drive.trajectorySequenceBuilder(startPose)
@@ -269,89 +200,52 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                         //Limits to 30 in/s and 30 in/s^2
                 )
                 .turn(Math.toRadians(-45))
-                .forward(8)
-                .back(8)
-                .turn(Math.toRadians(45))
-                .lineTo(new Vector2d(-34,10))
-                .turn(Math.toRadians(90))
-                .lineTo(new Vector2d(-61,13.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
-                .waitSeconds(1.5)
-                .addTemporalMarker(8,()->{
-                    dump.setPosition(0.33);
-                    arm1.setPosition(0.86);
-                    arm2.setPosition(0.13);
-                    intake.setPower(0.7);
-                    OperateClaw(1, 1);
-                })
-                .addTemporalMarker(8.5,()->{
-                    flipperL.setPosition(0.46);
-                    flipperR.setPosition(0.55);
-                })
-                .addTemporalMarker(9.5,()->{
-                    intake.setPower(0.0);
-                    OperateClaw(1, 0);
-                    dump.setPosition(0.3);
-                    arm1.setPosition(0.89);
-                    arm2.setPosition(0.09);
-                    flipperL.setPosition(1);
-                    flipperR.setPosition(0.05);
-                })
-                .lineTo(new Vector2d(16,10))
-                .addTemporalMarker(12,()->{
+                .forward(6)
+                .back(6)
+                .strafeLeft(5)
+                .turn(Math.toRadians(135))
+                .addDisplacementMarker(()->{
                     slide.setPower(0.5);
                     slide.setTargetPosition((int) (4.5 * 385));
                 })
-                .addTemporalMarker(14,()->{
+                .lineTo(new Vector2d(32,26))
+                .build();
+        distanceFromBoard = 4; // do not set me to 0 - I will kill your code
+        TrajectorySequence On_Board3 = drive.trajectorySequenceBuilder (trajSeq3.end())
+                .addTemporalMarker(0, () -> {
                     arm1.setPosition(0.4);
                     arm2.setPosition(0.56);
                     dump.setPosition(0.49);
                 })
-                .waitSeconds(3)
-                .lineTo(new Vector2d(34, 25),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30))
-                .build();
-        distanceFromBoard = 4.5; // do not set me to 0 - I will kill your code
-        TrajectorySequence On_Board3 = drive.trajectorySequenceBuilder (trajSeq3.end())
+                .waitSeconds(1)
                 .forward(distanceFromBoard,
-                        SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(25)
+                        SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20)
                         //Limits to 20 in/s and 20 in/s^2
                 )
-                .addTemporalMarker(.5, () -> {
+                .addTemporalMarker(1.5, () -> {
                     OperateClaw(0, 1);
-                })
-                .waitSeconds(.5)
-                .strafeLeft(12,
-                        SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(25)
-                        //Limits to 20 in/s and 20 in/s^2
-                )
-                .addTemporalMarker(2.5, () -> {
                     OperateClaw(1, 1);
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(1)
                 .back(distanceFromBoard)
-                .strafeTo(new Vector2d(34,8))
+                .strafeTo(new Vector2d(30,58))
                 .addTemporalMarker( 4, () -> {
                     OperateClaw(0, 0);
                     OperateClaw(1, 0);
-                    arm1.setPosition(0.89);
+                    arm1.setPosition(0.87);
                     arm2.setPosition(0.09);
                     dump.setPosition(0.3);
                 })
                 .addTemporalMarker(5, () -> {
-                    slide.setPower(-0.7);
-                    slide.setTargetPosition((0));
+                    slide.setPower(-0.5);
+                    slide.setTargetPosition((int) (0));
                 })
-                .lineTo(new Vector2d(56,8))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(56,58))
+                .waitSeconds(7)
                 .build();
 
-        // Telemetry
         telemetry.addData("Tensor Flow", "Camera Armed");
         telemetry.addData("Billiam", "Prepared");
         telemetry.addData("3-2-9, 3-2-9","15... 20!");
