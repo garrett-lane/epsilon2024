@@ -169,7 +169,7 @@ public class Blue_Audience extends LinearOpMode {
                     })
                     .addTemporalMarker(4, () -> {
                         slide.setPower(-0.7);
-                        slide.setTargetPosition((int) (0));
+                        slide.setTargetPosition(0);
                     })
                     .waitSeconds(1)
                     .lineTo(new Vector2d(56,12))
@@ -228,7 +228,7 @@ public class Blue_Audience extends LinearOpMode {
                     })
                     .addTemporalMarker(4, () -> {
                         slide.setPower(-0.7);
-                        slide.setTargetPosition((int) (0));
+                        slide.setTargetPosition(0);
                     })
                     .strafeTo(new Vector2d(34,12))
                     .waitSeconds(1)

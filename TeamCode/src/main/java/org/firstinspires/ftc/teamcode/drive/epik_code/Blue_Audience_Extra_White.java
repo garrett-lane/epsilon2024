@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 @Autonomous(group = "main", preselectTeleOp = "DriveBy")
 public class Blue_Audience_Extra_White extends LinearOpMode {
+    // This is where we define the variables for all motors and servos. It will yell at you about how they could be local variables, ignore that, i dont care.
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
@@ -44,15 +45,18 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
     private VisionPortal visionPortal;
     @Override
     public void runOpMode() {
+        // Don't totally understand what this does, but it comes from the haredware map in the sample mec drive file. I think it does something with the encoder positions
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        // Sets the robot's starting position and heading, assigning it to the startPose variable.
         Pose2d startPose = new Pose2d(-34, 60, Math.toRadians(-90));
+        // Sets the starting pose (position)
         drive.setPoseEstimate(startPose);
 
         // tensorflow initialization
         USE_WEBCAM = true;
         initTfod();
 
-        // motors and servos
+        // Motors and Servos - this is where the configuration is assigned. Assign motors and names in the config on the driver station first, then do it here, you will not see this in block code
         frontLeft = hardwareMap.get(DcMotor.class, "fl");
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
@@ -91,23 +95,26 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
 
         // Trajectories
         // Left, 1
-        TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose)
+        /*
+        In this section we create our trajectories during the Initilization phase. This allows the robot to run immedetly instead of taking time to build them once Auto has started.
+         */
+        TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose) //Start of a trajectory. We create a new trajectory sequence and name it "trajSeq1".
                 .forward(26,
                         SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         //Limits to 30 in/s and 30 in/s^2
-                )
-                .turn(Math.toRadians(45))
+                ) // Tells robot to move forward 26 inches at a slow pace.
+                .turn(Math.toRadians(45)) // Math.toRadians is required to make it turn exactly fourty five degrees. Postive turns left and negative turns right.
                 .forward(7)
                 .back(12)
                 .turn(Math.toRadians(45))
-                .strafeTo(new Vector2d(-34,10))
+                .strafeTo(new Vector2d(-34,10)) // strafeTo is functionally the same as lineTo. they both tell the robot to go to a position in a straight line.
                 .lineTo(new Vector2d(-61,13.5),
                         SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         //Limits to 30 in/s and 30 in/s^2)*/
                 )
-                .waitSeconds(1.5)
+                .waitSeconds(1.5) // Tells the Robot to wait 1.5 seconds after completing the previous movement.
                 .addTemporalMarker(7,()->{
                     dump.setPosition(0.33);
                     arm1.setPosition(0.86);
@@ -171,7 +178,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                 })
                 .addTemporalMarker(4, () -> {
                     slide.setPower(-0.7);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(1)
                 .lineTo(new Vector2d(56,12))
@@ -257,7 +264,7 @@ public class Blue_Audience_Extra_White extends LinearOpMode {
                 })
                 .addTemporalMarker(4, () -> {
                     slide.setPower(-0.7);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .strafeTo(new Vector2d(34,12))
                 .waitSeconds(1)

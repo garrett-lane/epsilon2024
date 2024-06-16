@@ -134,7 +134,7 @@ public class Red_Audience extends LinearOpMode {
                 })
                 .addTemporalMarker(3, () -> {
                     slide.setPower(-0.7);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(1)
                 .lineTo(new Vector2d(56,-6))
@@ -189,7 +189,7 @@ public class Red_Audience extends LinearOpMode {
                 })
                 .addTemporalMarker(3, () -> {
                     slide.setPower(-0.7);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .lineTo(new Vector2d(54,-10))
                 .build();
@@ -246,7 +246,7 @@ public class Red_Audience extends LinearOpMode {
                 })
                 .addTemporalMarker(3, () -> {
                     slide.setPower(-0.7);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(1)
                 .lineTo(new Vector2d(56,-5))

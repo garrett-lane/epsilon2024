@@ -131,7 +131,7 @@ public class Red_Board extends LinearOpMode {
                 })
                 .addTemporalMarker(5, () -> {
                     slide.setPower(-0.5);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(2)
                 .lineTo(new Vector2d(56,-58))
@@ -183,7 +183,7 @@ public class Red_Board extends LinearOpMode {
                 })
                 .addTemporalMarker(5, () -> {
                     slide.setPower(-0.5);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(2)
                 .lineTo(new Vector2d(56,-58))
@@ -238,7 +238,7 @@ public class Red_Board extends LinearOpMode {
                 })
                 .addTemporalMarker(5, () -> {
                     slide.setPower(-0.5);
-                    slide.setTargetPosition((int) (0));
+                    slide.setTargetPosition(0);
                 })
                 .waitSeconds(2)
                 .lineTo(new Vector2d(56,-58))
