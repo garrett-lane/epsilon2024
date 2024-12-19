@@ -74,150 +74,73 @@ public class ITD_4_Spec_Auto extends LinearOpMode {
         In this section we create our trajectories during the Initilization phase. This allows the robot to run immedetly instead of taking time to build them once Auto has started.
          */
         TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose) //Start of a trajectory. We create a new trajectory sequence and name it "trajSeq1".
-                //movement 1
-                .lineTo(new Vector2d(0, 33.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
-                // Tells robot to move forward 26 inches at a slow pace.
-                //movement 2
-                .lineTo(new Vector2d(-7.5, 47.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
+                // forward to fish tank
+                .lineTo(new Vector2d(0, 37.5))
+                .waitSeconds(2)
+                // back away from fish tank
+                .lineTo(new Vector2d(-7.5, 47.5))
+                // spline to prep block push
                 .setTangent(3.5)
                 .splineToLinearHeading(new Pose2d(-47.5, 15.5, 0), Math.PI / 2,
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
+                        SampleMecanumDrive.getVelocityConstraint(90, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(90)
                 )
-                //.turn(Math.toRadians(45)) // Math.toRadians is required to make it turn exactly fourty five degrees. Postive turns left and negative turns right.
-                //movement 3
-                .lineTo(new Vector2d(-47.5, 50.54),
-                        SampleMecanumDrive.getVelocityConstraint(35, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                )
-                //movement 4
-                //.splineToLinearHeading(new Pose2d(-60, 10.5, 0), 0)
-                .lineToLinearHeading(new Pose2d(-42.5, 10.5, 1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineTo(new Vector2d(-55, 10.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                //movement 5
-                .lineTo(new Vector2d(-55, 50.54),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                //.lineTo(new Vector2d(-60, 55.54),
-                //SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                //SampleMecanumDrive.getAccelerationConstraint(15)
-                //Limits to 30 in/s and 30 in/s^2)*/
-                //)
-                //movement 6
-                .lineTo(new Vector2d(-55, 10.5),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        )
+                // push block 1
+                .lineTo(new Vector2d(-49.5, 50.54))
+                // backup to prep block push
+                .lineToLinearHeading(new Pose2d(-42, 10.5, 1.5708))
+                .lineTo(new Vector2d(-55, 10.5))
+                // push block 2
+                .lineTo(new Vector2d(-57, 50.54))
+                // backup to prep block push
+                .lineTo(new Vector2d(-57, 10.5))
                 .lineTo(new Vector2d(-65, 10.5),
                         SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(15)
-                        //Limits to 30 in/s and 30 in/s^2)*/
                 )
-                .lineTo(new Vector2d(-65, 50.54),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        )
-                .lineTo(new Vector2d(-55, 58),
-                        SampleMecanumDrive.getVelocityConstraint(15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(15)
-                        //Limits to 30 in/s and 30 in/s^2)*/
-                )
-                //.lineToLinearHeading(new Pose2d(31.5, 0, 90)) // strafeTo is functionally the same as lineTo. they both tell the robot to go to a position in a straight line.
+                // push block 3
+                // .lineTo(new Vector2d(-65, 50.54))
+                .splineToConstantHeading(new Vector2d(-60, 58), Math.toRadians(180),
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(30))
+                .waitSeconds(2)
                 //movement 7
-                .lineToLinearHeading(new Pose2d(0, 45, -1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .splineTo(new Vector2d(0, 45), 0,
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         )
-                .lineTo(new Vector2d(0, 35),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .waitSeconds(1)
-                .lineTo(new Vector2d(0, 45),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineToLinearHeading(new Pose2d(-35, 48, 1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(0, 35))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(0, 45))
+                .splineTo(new Vector2d(-35, 48), 0,
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         )
-                .lineTo(new Vector2d(-35, 58),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .waitSeconds(1)
-                .lineTo(new Vector2d(-35, 48),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineToLinearHeading(new Pose2d(0, 45, -1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(-35, 58))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(-35, 48))
+                .splineTo(new Vector2d(0, 45), 0,
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         )
-                .lineTo(new Vector2d(0, 35),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .waitSeconds(1)
-                .lineTo(new Vector2d(0, 45),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineToLinearHeading(new Pose2d(-35, 48, 1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(0, 35))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(0, 45))
+                .splineTo(new Vector2d(-35, 48), 0,
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         )
-                .lineTo(new Vector2d(-35, 58),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .waitSeconds(1)
-                .lineTo(new Vector2d(-35, 48),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineToLinearHeading(new Pose2d(0, 45, -1.5708),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(-35, 58))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(-35, 48))
+                .splineTo(new Vector2d(0, 45), 0,
+                        SampleMecanumDrive.getVelocityConstraint(50, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(30)
                         )
-                .lineTo(new Vector2d(0, 35),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .waitSeconds(1)
-                .lineTo(new Vector2d(0, 45),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(35)
-                        )
-                .lineTo(new Vector2d(-45, 58),
-                        SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(30)
-                        )
-                //.lineToLinearHeading(new Pose2d(49.5, 60, 0))
-                //movement 8
-                //.lineToLinearHeading(new Pose2d(31.5, 0, 90))
-                //movement 9
-                //.lineTo(new Vector2d(64.5, 64.5),
-                //SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                //SampleMecanumDrive.getAccelerationConstraint(30)
-                //Limits to 30 in/s and 30 in/s^2)*/
-                //)
-                .waitSeconds(0) // Tells the Robot to wait 1.5 seconds after completing the previous movement.
+                .lineTo(new Vector2d(0, 35))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(0, 45))
+                .lineTo(new Vector2d(-45, 58))
                 //.addTemporalMarker(7,()->{
                 //dump.setPosition(0.33);
                 //arm1.setPosition(0.86);
@@ -253,18 +176,8 @@ public class ITD_4_Spec_Auto extends LinearOpMode {
                 //)
                 .build();
 
-        // Telemetry
-        telemetry.addData("hey", "you look funny");
-        telemetry.update();
-
-        waitForStart(); // let's roll
-
-        // Put run blocks here.
-        // gets position of recognition
-
-
+        waitForStart();
         // Path determinations
-
             drive.followTrajectorySequence(trajSeq1);
     }
 
