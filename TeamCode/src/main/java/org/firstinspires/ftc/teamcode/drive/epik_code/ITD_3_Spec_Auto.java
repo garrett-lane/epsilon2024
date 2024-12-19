@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
@@ -26,6 +27,10 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
     private DcMotor slideLeft;
     private Servo freakyClaw;
     private DcMotor slideRight;
+    private Servo armL;
+    private Servo armR;
+    private Servo outakeSwivel;
+    private Servo outakeClaw;
 
 
     private static final String[] LABELS = {"blue"};
@@ -50,12 +55,26 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
         slideLeft = hardwareMap.get(DcMotor.class, "slideLeft");
         freakyClaw = hardwareMap.get(Servo.class, "freakyClaw");
         slideRight = hardwareMap.get(DcMotor.class, "slideRight");
+        armL = hardwareMap.get(Servo.class, "armL");
+        armR = hardwareMap.get(Servo.class, "armR");
+        outakeClaw = hardwareMap.get(Servo.class, "outakeClaw");
+        outakeSwivel = hardwareMap.get(Servo.class, "outakeSwivel");
 
         // Initialization behavior and positions
+        armL.setDirection(Servo.Direction.REVERSE);
+        freakyClaw.setPosition(0.52);
+        clawRot.setPosition(0.78);
+        swivel.setPosition(0.04);
+        armL.setPosition(0.06);
+        armR.setPosition(0.02);
+        outakeClaw.setPosition(0.6);
+        outakeSwivel.setPosition(0.4);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideLeft.setDirection(DcMotor.Direction.REVERSE);
         slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -65,6 +84,8 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
         swivel.setPosition(0.04);
         clawRot.setPosition(0.78);
         freakyClaw.setPosition(0.52);
+        ((DcMotorEx) slideRight).setTargetPositionTolerance(20);
+        ((DcMotorEx) slideLeft).setTargetPositionTolerance(20);
 
         // variables
 
@@ -106,7 +127,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 //Limits to 30 in/s and 30 in/s^2)*/
                 //)
                 //movement 6
-                .lineTo(new Vector2d(-50, 58))
+                .lineTo(new Vector2d(-50, 60))
                 //.lineToLinearHeading(new Pose2d(31.5, 0, 90)) // strafeTo is functionally the same as lineTo. they both tell the robot to go to a position in a straight line.
                 //movement 7
                 .lineToLinearHeading(new Pose2d(0, 45, -1.5708))
@@ -141,12 +162,16 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 //Limits to 30 in/s and 30 in/s^2)*/
                 //)
                 .waitSeconds(0) // Tells the Robot to wait 1.5 seconds after completing the previous movement.
-                //.addTemporalMarker(7,()->{
-                //dump.setPosition(0.33);
-                //arm1.setPosition(0.86);
-                //arm2.setPosition(0.13);
-                //intake.setPower(0.7);
-                //})
+                .addTemporalMarker(0,()->{
+                    slideLeft.setTargetPosition(450);
+                    slideRight.setTargetPosition(450);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(20);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(20);
+                    slideLeft.setPower(0.75);
+                    slideRight.setPower(0.75);
+                })
                 //.addTemporalMarker(7.5,()->{
                 //flipperL.setPosition(0.46);
                 //flipperR.setPosition(0.55);
