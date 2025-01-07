@@ -193,7 +193,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideRight.setPower(0.75);
                     outakeSwivel.setPosition(.15);
                 })
-                .addTemporalMarker(2,()->{
+                .addTemporalMarker(2.25,()->{
                 outakeClaw.setPosition(.45);
                 })
                 .addTemporalMarker(3,()->{
@@ -233,7 +233,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     outakeSwivel.setPosition(.15);
                 })
                 .addTemporalMarker(12.5,()->{
-                    outakeClaw.setPosition(.45);
+                    outakeClaw.setPosition(.5);
                 })
                 .addTemporalMarker(13,()->{
                     slideLeft.setTargetPosition(0);
@@ -247,7 +247,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 })
                 .addTemporalMarker(13.75,()->{
                     outakeSwivel.setPosition(.15);
-                    outakeClaw.setPosition(.45);
+                    outakeClaw.setPosition(.5);
                 })
                 .addTemporalMarker(14,()->{
                     slideLeft.setTargetPosition(0);
@@ -285,7 +285,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     outakeSwivel.setPosition(.15);
                 })
                 .addTemporalMarker(19.75,()->{
-                    outakeClaw.setPosition(.45);
+                    outakeClaw.setPosition(.5);
                 })
                 .addTemporalMarker(20.5,()->{
                     slideLeft.setTargetPosition(0);

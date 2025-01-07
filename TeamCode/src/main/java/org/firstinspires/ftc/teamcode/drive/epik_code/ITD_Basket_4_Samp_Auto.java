@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
 @Autonomous(group = "main", preselectTeleOp = "Epsilon Drive Into The Deep 24-25")
-public class ITD_Basket_Colored_Auto extends LinearOpMode {
+public class ITD_Basket_4_Samp_Auto extends LinearOpMode {
     // This is where we define the variables for all motors and servos. It will yell at you about how they could be local variables, ignore that, i dont care.
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -100,10 +100,6 @@ public class ITD_Basket_Colored_Auto extends LinearOpMode {
                 .waitSeconds(1)
                 .lineToLinearHeading(new Pose2d(56, 58.5, Math.toRadians(45)))
                 .waitSeconds(.25)
-                .lineToLinearHeading(new Pose2d(-9, 58.5, Math.toRadians(0)))
-                .waitSeconds(.25)
-                .lineToLinearHeading(new Pose2d(56, 58.5, Math.toRadians(45)))
-                .waitSeconds(.25)
 //                .waitSeconds(7.5)
                 .lineToLinearHeading(new Pose2d(51, 40.5, Math.toRadians(95)))
                 .waitSeconds(6)
@@ -118,211 +114,211 @@ public class ITD_Basket_Colored_Auto extends LinearOpMode {
                 .waitSeconds(6) // Tells the Robot to wait 1.5 seconds after completing the previous movement.
                 .lineToLinearHeading(new Pose2d(58, 56.5, Math.toRadians(45)))
                 .waitSeconds(0.24)
-//                .addTemporalMarker(0,()->{
-//                    slideLeft.setTargetPosition(4000);
-//                    slideRight.setTargetPosition(4000);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(2,()->{
-//                    outakeClaw.setPosition(.5);
-//                })
-//                .addTemporalMarker(3,()->{
-//                    slideLeft.setTargetPosition(0);
-//                    slideRight.setTargetPosition(0);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(3.5,()->{
-//                    horSlide.setTargetPosition(400);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(4,()->{
-//                    swivel.setPosition(.63);
-//                })
-//                .addTemporalMarker(4.75,()->{
-//                    freakyClaw.setPosition(.78);
-//                })
-//                .addTemporalMarker(5.5,()->{
-//                    swivel.setPosition(.04);
-//                    outakeSwivel.setPosition(.95);
-//                    outakeClaw.setPosition(.5);
-//                })
-//                .addTemporalMarker(6,()->{
-//                    horSlide.setTargetPosition(0);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(6.75,()->{
-//                    armL.setPosition(.43);
-//                    armR.setPosition(.39);
-//                })
-//                .addTemporalMarker(7.25,()->{
-//                    outakeClaw.setPosition(.6);
-//                })
-//                .addTemporalMarker(7.35,()->{
-//                    freakyClaw.setPosition(.565);
-//                })
-//                .addTemporalMarker(7.5,()->{
-//                    outakeClaw.setPosition(.6);
-//                    armL.setPosition(.08);
-//                    armR.setPosition(.04);
-//                })
-//                .addTemporalMarker(7.75,()->{
-//                    slideLeft.setTargetPosition(4000);
-//                    slideRight.setTargetPosition(4000);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(8,()->{
-//                    outakeSwivel.setPosition(.4);
-//                })
-//                .addTemporalMarker(10.25,()->{
-//                    outakeClaw.setPosition(.5);
-//                })
-//                // IT STARTS HERE YOU STUPID NIGGA
-//                .addTemporalMarker(11,()->{
-//                    slideLeft.setTargetPosition(0);
-//                    slideRight.setTargetPosition(0);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(12,()->{
-//                    horSlide.setTargetPosition(400);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(12.5,()->{
-//                    swivel.setPosition(.63);
-//                })
-//                .addTemporalMarker(12.75,()->{
-//                    freakyClaw.setPosition(.78);
-//                })
-//                .addTemporalMarker(13.5,()->{
-//                    swivel.setPosition(.04);
-//                    outakeSwivel.setPosition(.95);
-//                    outakeClaw.setPosition(.5);
-//                })
-//                .addTemporalMarker(14,()->{
-//                    horSlide.setTargetPosition(0);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(14.75,()->{
-//                    armL.setPosition(.43);
-//                    armR.setPosition(.39);
-//                })
-//                .addTemporalMarker(15.25,()->{
-//                    outakeClaw.setPosition(.6);
-//                })
-//                .addTemporalMarker(15.35,()->{
-//                    freakyClaw.setPosition(.565);
-//                })
-//                .addTemporalMarker(15.5,()->{
-//                    outakeClaw.setPosition(.6);
-//                    armL.setPosition(.08);
-//                    armR.setPosition(.04);
-//                })
-//                .addTemporalMarker(15.75,()->{
-//                    slideLeft.setTargetPosition(4000);
-//                    slideRight.setTargetPosition(4000);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(16,()->{
-//                    outakeSwivel.setPosition(.4);
-//                })
-//                .addTemporalMarker(18,()->{
-//                    outakeClaw.setPosition(.5);
-//                })
-//                // WALL BLOCK(3RD) START
-//                .addTemporalMarker(18.75,()->{
-//                    slideLeft.setTargetPosition(0);
-//                    slideRight.setTargetPosition(0);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx)slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx)slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                    clawRot.setPosition(.350);
-//                })
-//                .addTemporalMarker(19,()->{
-//                    horSlide.setTargetPosition(750);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(19.75,()->{
-//                    swivel.setPosition(.63);
-//                })
-//                .addTemporalMarker(20.25,()->{
-//                    freakyClaw.setPosition(.78);
-//                })
-//                .addTemporalMarker(21,()->{
-//                    swivel.setPosition(0.04);
-//                    outakeSwivel.setPosition(.95);
-//                })
-//                .addTemporalMarker(22,()->{
-//                    clawRot.setPosition(.52);
-//                })
-//                .addTemporalMarker(22.25,()->{
-//                    horSlide.setTargetPosition(0);
-//                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    horSlide.setPower(1);
-//                })
-//                .addTemporalMarker(22.75,()->{
-//                    armL.setPosition(.43);
-//                    armR.setPosition(.39);
-//                })
-//                .addTemporalMarker(23.25,()->{
-//                    outakeClaw.setPosition(.6);
-//                })
-//                .addTemporalMarker(23.35,()->{
-//                    freakyClaw.setPosition(.565);
-//                })
-//                .addTemporalMarker(23.75,()->{
-//                    armL.setPosition(.08);
-//                    armR.setPosition(.04);
-//                })
-//                .addTemporalMarker(24,()->{
-//                    slideLeft.setTargetPosition(4000);
-//                    slideRight.setTargetPosition(4000);
-//                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
-//                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
-//                    slideLeft.setPower(1);
-//                    slideRight.setPower(1);
-//                })
-//                .addTemporalMarker(23.75,()->{
-//                    outakeSwivel.setPosition(.4);
-//                })
-//                .addTemporalMarker(26.25,()->{
-//                    outakeClaw.setPosition(.5);
-//                })
-//                .addTemporalMarker(17.5,()->{
-//                })
+                .addTemporalMarker(0,()->{
+                    slideLeft.setTargetPosition(4000);
+                    slideRight.setTargetPosition(4000);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(2,()->{
+                    outakeClaw.setPosition(.5);
+                })
+                .addTemporalMarker(3,()->{
+                    slideLeft.setTargetPosition(0);
+                    slideRight.setTargetPosition(0);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(3.5,()->{
+                    horSlide.setTargetPosition(400);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(4,()->{
+                    swivel.setPosition(.63);
+                })
+                .addTemporalMarker(4.75,()->{
+                    freakyClaw.setPosition(.78);
+                })
+                .addTemporalMarker(5.5,()->{
+                    swivel.setPosition(.04);
+                    outakeSwivel.setPosition(.95);
+                    outakeClaw.setPosition(.5);
+                })
+                .addTemporalMarker(6,()->{
+                    horSlide.setTargetPosition(0);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(6.75,()->{
+                    armL.setPosition(.43);
+                    armR.setPosition(.39);
+                })
+                .addTemporalMarker(7.25,()->{
+                    outakeClaw.setPosition(.6);
+                })
+                .addTemporalMarker(7.35,()->{
+                    freakyClaw.setPosition(.565);
+                })
+                .addTemporalMarker(7.5,()->{
+                    outakeClaw.setPosition(.6);
+                    armL.setPosition(.08);
+                    armR.setPosition(.04);
+                })
+                .addTemporalMarker(7.75,()->{
+                    slideLeft.setTargetPosition(4000);
+                    slideRight.setTargetPosition(4000);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(8,()->{
+                    outakeSwivel.setPosition(.4);
+                })
+                .addTemporalMarker(10.25,()->{
+                    outakeClaw.setPosition(.5);
+                })
+                // IT STARTS HERE YOU STUPID NIGGA
+                .addTemporalMarker(11,()->{
+                    slideLeft.setTargetPosition(0);
+                    slideRight.setTargetPosition(0);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(12,()->{
+                    horSlide.setTargetPosition(400);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(12.5,()->{
+                    swivel.setPosition(.63);
+                })
+                .addTemporalMarker(12.75,()->{
+                    freakyClaw.setPosition(.78);
+                })
+                .addTemporalMarker(13.5,()->{
+                    swivel.setPosition(.04);
+                    outakeSwivel.setPosition(.95);
+                    outakeClaw.setPosition(.5);
+                })
+                .addTemporalMarker(14,()->{
+                    horSlide.setTargetPosition(0);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(14.75,()->{
+                    armL.setPosition(.43);
+                    armR.setPosition(.39);
+                })
+                .addTemporalMarker(15.25,()->{
+                    outakeClaw.setPosition(.6);
+                })
+                .addTemporalMarker(15.35,()->{
+                    freakyClaw.setPosition(.565);
+                })
+                .addTemporalMarker(15.5,()->{
+                    outakeClaw.setPosition(.6);
+                    armL.setPosition(.08);
+                    armR.setPosition(.04);
+                })
+                .addTemporalMarker(15.75,()->{
+                    slideLeft.setTargetPosition(4000);
+                    slideRight.setTargetPosition(4000);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(16,()->{
+                    outakeSwivel.setPosition(.4);
+                })
+                .addTemporalMarker(18,()->{
+                    outakeClaw.setPosition(.5);
+                })
+                // WALL BLOCK(3RD) START
+                .addTemporalMarker(18.75,()->{
+                    slideLeft.setTargetPosition(0);
+                    slideRight.setTargetPosition(0);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx)slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx)slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                    clawRot.setPosition(.350);
+                })
+                .addTemporalMarker(19,()->{
+                    horSlide.setTargetPosition(750);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(19.75,()->{
+                    swivel.setPosition(.63);
+                })
+                .addTemporalMarker(20.25,()->{
+                    freakyClaw.setPosition(.78);
+                })
+                .addTemporalMarker(21,()->{
+                    swivel.setPosition(0.04);
+                    outakeSwivel.setPosition(.95);
+                })
+                .addTemporalMarker(22,()->{
+                    clawRot.setPosition(.52);
+                })
+                .addTemporalMarker(22.25,()->{
+                    horSlide.setTargetPosition(0);
+                    horSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    horSlide.setPower(1);
+                })
+                .addTemporalMarker(22.75,()->{
+                    armL.setPosition(.43);
+                    armR.setPosition(.39);
+                })
+                .addTemporalMarker(23.25,()->{
+                    outakeClaw.setPosition(.6);
+                })
+                .addTemporalMarker(23.35,()->{
+                    freakyClaw.setPosition(.565);
+                })
+                .addTemporalMarker(23.75,()->{
+                    armL.setPosition(.08);
+                    armR.setPosition(.04);
+                })
+                .addTemporalMarker(24,()->{
+                    slideLeft.setTargetPosition(4000);
+                    slideRight.setTargetPosition(4000);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
+                .addTemporalMarker(23.75,()->{
+                    outakeSwivel.setPosition(.4);
+                })
+                .addTemporalMarker(26.25,()->{
+                    outakeClaw.setPosition(.5);
+                })
+                .addTemporalMarker(17.5,()->{
+                })
 
 
 
