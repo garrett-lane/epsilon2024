@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.drive.epik_code;
 
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,7 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -115,8 +113,9 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 )
                 //movement 4
                 //.splineToLinearHeading(new Pose2d(-60, 10.5, 0), 0)
-                .lineToLinearHeading(new Pose2d(-38.5, 10.5, 1.5708))
-                .lineTo(new Vector2d(-55, 10.5))
+                .lineToLinearHeading(new Pose2d(-36.5, 8.5, 1.5708))
+                //second block strafe
+                .lineTo(new Vector2d(-57, 8.5))
                 .setTangent(1)
                 .splineToConstantHeading(new Vector2d(-50, 50.54),1.5708,
                         SampleMecanumDrive.getVelocityConstraint(220, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
@@ -133,18 +132,18 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 //Limits to 30 in/s and 30 in/s^2)*/
                 //)
                 //movement 6
-                .lineTo(new Vector2d(-50, 60))
+                .lineTo(new Vector2d(-50, 60.5))
                 //.lineToLinearHeading(new Pose2d(31.5, 0, 90)) // strafeTo is functionally the same as lineTo. they both tell the robot to go to a position in a straight line.
                 //movement 7
                 .lineToLinearHeading(new Pose2d(-3.5, 45.5, -1.5708))
-                .lineTo(new Vector2d(0, 36.55))
+                .lineTo(new Vector2d(-3.5, 36.55))
                 .waitSeconds(1)
-                .lineTo(new Vector2d(0, 45))
+                .lineTo(new Vector2d(-3.5, 45))
                 .lineToLinearHeading(new Pose2d(-35, 48, 1.5708),
                         SampleMecanumDrive.getVelocityConstraint(170, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(170)
                 )
-                .lineTo(new Vector2d(-35, 62),
+                .lineTo(new Vector2d(-35, 61),
                         SampleMecanumDrive.getVelocityConstraint(35, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(35)
                 )
@@ -155,9 +154,9 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                         SampleMecanumDrive.getAccelerationConstraint(170)
                 )
 
-                .lineTo(new Vector2d(-5, 35))
+                .lineTo(new Vector2d(-7, 35))
                 .waitSeconds(0.5)
-                .lineTo(new Vector2d(0, 49))
+                .lineTo(new Vector2d(-7, 49))
                 .lineTo(new Vector2d(-40, 60.5),
                         SampleMecanumDrive.getVelocityConstraint(170, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(170)
@@ -208,7 +207,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     //block 2
 
                 })
-                .addTemporalMarker(9.9,()->{
+                .addTemporalMarker(10.15,()->{
                     outakeClaw.setPosition(0.7);
                 })
                 .addTemporalMarker(10.6,()->{
