@@ -51,9 +51,9 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
         swivel = hardwareMap.get(Servo.class, "swivel");
-        clawRot = hardwareMap.get(Servo.class, "freakyClaw");
+        clawRot = hardwareMap.get(Servo.class, "clawRot");
         slideLeft = hardwareMap.get(DcMotor.class, "slideLeft");
-        freakyClaw = hardwareMap.get(Servo.class, "clawRot");
+        freakyClaw = hardwareMap.get(Servo.class, "freakyClaw");
         slideRight = hardwareMap.get(DcMotor.class, "slideRight");
         armL = hardwareMap.get(Servo.class, "armL");
         armR = hardwareMap.get(Servo.class, "armR");
@@ -62,13 +62,12 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
 
         // Initialization behavior and positions
         armL.setDirection(Servo.Direction.REVERSE);
-        outakeClaw.setDirection(Servo.Direction.REVERSE);
-        freakyClaw.setPosition(0.78);
-        clawRot.setPosition(0.52);
+        freakyClaw.setPosition(0.52);
+        clawRot.setPosition(0.78);
         swivel.setPosition(0.04);
         armL.setPosition(0.06);
         armR.setPosition(0.02);
-        outakeClaw.setPosition(0.7);
+        outakeClaw.setPosition(0.6);
         outakeSwivel.setPosition(0.2);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -97,7 +96,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
          */
         TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose) //Start of a trajectory. We create a new trajectory sequence and name it "trajSeq1".
                 //movement 1
-                .lineTo(new Vector2d(0, 36.8))
+                .lineTo(new Vector2d(0, 35.8))
                 // Tells robot to move forward 26 inches at a slow pace.
                 .waitSeconds(1)
                 //movement 2
@@ -136,8 +135,8 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 .lineTo(new Vector2d(-50, 60))
                 //.lineToLinearHeading(new Pose2d(31.5, 0, 90)) // strafeTo is functionally the same as lineTo. they both tell the robot to go to a position in a straight line.
                 //movement 7
-                .lineToLinearHeading(new Pose2d(-3.5, 45.5, -1.5708))
-                .lineTo(new Vector2d(0, 36.55))
+                .lineToLinearHeading(new Pose2d(-3.5, 45, -1.5708))
+                .lineTo(new Vector2d(0, 35.55))
                 .waitSeconds(1)
                 .lineTo(new Vector2d(0, 45))
                 .lineToLinearHeading(new Pose2d(-35, 48, 1.5708),
@@ -157,7 +156,7 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
 
                 .lineTo(new Vector2d(-5, 35))
                 .waitSeconds(0.5)
-                .lineTo(new Vector2d(0, 49))
+                .lineTo(new Vector2d(0, 45))
                 .lineTo(new Vector2d(-40, 60.5),
                         SampleMecanumDrive.getVelocityConstraint(170, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(170)
@@ -173,9 +172,9 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                 //)
                 //block 1
                 .waitSeconds(0) // Tells the Robot to wait 1.5 seconds after completing the previous movement.
-                .addTemporalMarker(0.1,()->{
-                    slideLeft.setTargetPosition(510);
-                    slideRight.setTargetPosition(510);
+                .addTemporalMarker(0,()->{
+                    slideLeft.setTargetPosition(1350);
+                    slideRight.setTargetPosition(1350);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
@@ -184,14 +183,15 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideRight.setPower(0.75);
                 })
                 .addTemporalMarker(1.75,()->{
-                    slideLeft.setTargetPosition(302);
-                    slideRight.setTargetPosition(302);
+                    slideLeft.setTargetPosition(800);
+                    slideRight.setTargetPosition(800);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
                     ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
                     slideLeft.setPower(0.75);
                     slideRight.setPower(0.75);
+                    outakeSwivel.setPosition(.15);
                 })
                 .addTemporalMarker(2.25,()->{
                 outakeClaw.setPosition(.45);
@@ -208,12 +208,12 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     //block 2
 
                 })
-                .addTemporalMarker(9.9,()->{
-                    outakeClaw.setPosition(0.7);
+                .addTemporalMarker(10,()->{
+                    outakeClaw.setPosition(.6);
                 })
-                .addTemporalMarker(10.6,()->{
-                    slideLeft.setTargetPosition(510);
-                    slideRight.setTargetPosition(510);
+                .addTemporalMarker(11,()->{
+                    slideLeft.setTargetPosition(1400);
+                    slideRight.setTargetPosition(1400);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
@@ -221,9 +221,23 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideLeft.setPower(0.75);
                     slideRight.setPower(0.75);
                 })
-                .addTemporalMarker(13.5,()->{
-                    slideLeft.setTargetPosition(302);
-                    slideRight.setTargetPosition(302);
+                .addTemporalMarker(12.25,()->{
+                    slideLeft.setTargetPosition(800);
+                    slideRight.setTargetPosition(800);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
+                    ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
+                    slideLeft.setPower(0.75);
+                    slideRight.setPower(0.75);
+                    outakeSwivel.setPosition(.15);
+                })
+                .addTemporalMarker(12.5,()->{
+                    outakeClaw.setPosition(.5);
+                })
+                .addTemporalMarker(13,()->{
+                    slideLeft.setTargetPosition(0);
+                    slideRight.setTargetPosition(0);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
@@ -232,9 +246,10 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideRight.setPower(0.75);
                 })
                 .addTemporalMarker(13.75,()->{
-                    outakeClaw.setPosition(0.45);
+                    outakeSwivel.setPosition(.15);
+                    outakeClaw.setPosition(.5);
                 })
-                .addTemporalMarker(14.25,()->{
+                .addTemporalMarker(14,()->{
                     slideLeft.setTargetPosition(0);
                     slideRight.setTargetPosition(0);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -245,12 +260,12 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideRight.setPower(0.75);
                 })
                 //block 3
-                .addTemporalMarker(17,()->{
-                    outakeClaw.setPosition(0.7);
+                .addTemporalMarker(16.25,()->{
+                    outakeClaw.setPosition(.6);
                 })
-                .addTemporalMarker(17.25,()->{
-                    slideLeft.setTargetPosition(510);
-                    slideRight.setTargetPosition(510);
+                .addTemporalMarker(16.5,()->{
+                    slideLeft.setTargetPosition(1400);
+                    slideRight.setTargetPosition(1400);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
@@ -259,17 +274,18 @@ public class ITD_3_Spec_Auto extends LinearOpMode {
                     slideRight.setPower(0.75);
                 })
                 .addTemporalMarker(19.5,()->{
-                    slideLeft.setTargetPosition(302);
-                    slideRight.setTargetPosition(302);
+                    slideLeft.setTargetPosition(800);
+                    slideRight.setTargetPosition(800);
                     slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     ((DcMotorEx) slideRight).setTargetPositionTolerance(10);
                     ((DcMotorEx) slideLeft).setTargetPositionTolerance(10);
                     slideLeft.setPower(0.75);
                     slideRight.setPower(0.75);
+                    outakeSwivel.setPosition(.15);
                 })
-                .addTemporalMarker(19.6,()->{
-                    outakeClaw.setPosition(0.45);
+                .addTemporalMarker(19.75,()->{
+                    outakeClaw.setPosition(.5);
                 })
                 .addTemporalMarker(20.5,()->{
                     slideLeft.setTargetPosition(0);

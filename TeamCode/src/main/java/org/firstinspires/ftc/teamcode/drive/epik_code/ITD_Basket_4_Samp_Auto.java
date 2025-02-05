@@ -97,7 +97,7 @@ public class ITD_Basket_4_Samp_Auto extends LinearOpMode {
          */
         TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose) //Start of a trajectory. We create a new trajectory sequence and name it "trajSeq1".
                 //movement 1
-
+                .waitSeconds(1)
                 .lineToLinearHeading(new Pose2d(56, 58.5, Math.toRadians(45)))
                 .waitSeconds(.25)
 //                .waitSeconds(7.5)

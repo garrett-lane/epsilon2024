@@ -63,8 +63,8 @@ public class ITD_4_Spec_Auto extends LinearOpMode {
         slideRight.setDirection(DcMotor.Direction.REVERSE);
         slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         swivel.setPosition(0.04);
-        clawRot.setPosition(0.52);
-        freakyClaw.setPosition(0.3);
+        clawRot.setPosition(0.78);
+        freakyClaw.setPosition(0.52);
 
         // variables
 
