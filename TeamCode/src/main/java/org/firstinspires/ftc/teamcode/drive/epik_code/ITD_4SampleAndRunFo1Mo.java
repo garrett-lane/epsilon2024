@@ -45,10 +45,10 @@ public class ITD_4SampleAndRunFo1Mo extends LinearOpMode {
         // tensorflow initialization
 
         // Motors and Servos - this is where the configuration is assigned. Assign motors and names in the config on the driver station first, then do it here, you will not see this in block code
-        frontLeft = hardwareMap.get(DcMotor.class, "fl");
-        frontRight = hardwareMap.get(DcMotor.class, "fr");
-        backLeft = hardwareMap.get(DcMotor.class, "bl");
-        backRight = hardwareMap.get(DcMotor.class, "br");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
         swivel = hardwareMap.get(Servo.class, "swivel");
         freakyClaw = hardwareMap.get(Servo.class, "clawRot");
         slideLeft = hardwareMap.get(DcMotor.class, "slideLeft");
