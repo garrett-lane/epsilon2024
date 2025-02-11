@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
@@ -74,6 +75,14 @@ public class ITD_4_Spec_Auto extends LinearOpMode {
         In this section we create our trajectories during the Initilization phase. This allows the robot to run immedetly instead of taking time to build them once Auto has started.
          */
         TrajectorySequence trajSeq1 = drive.trajectorySequenceBuilder(startPose) //Start of a trajectory. We create a new trajectory sequence and name it "trajSeq1".
+                .addTemporalMarker(1,()->{
+                    slideLeft.setTargetPosition(1800);
+                    slideLeft.setTargetPosition(1800);
+                    slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    slideLeft.setPower(1);
+                    slideRight.setPower(1);
+                })
 
                 .build();
 
